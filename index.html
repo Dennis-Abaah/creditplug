@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Plug - Earn Instant Airtime & Mobile Rewards in Ghana</title>
+    <!-- Meta tags for offerwall network verification -->
+    <meta name="description" content="Complete quick micro-tasks, web visits, and surveys in Ghana to earn instant MTN, Telecel, and AT Ghana airtime top-ups. Minimum cashout GHS 2.00.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b',
+                        },
+                        mtn: '#FFCC00',
+                        telecel: '#E2001A',
+                        atghana: '#003399'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Lightweight custom keyframe animations */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.02); }
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+        .ticker-wrap {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- Top Bar Notice -->
+    <div class="bg-gradient-to-r from-brand-700 via-emerald-600 to-teal-700 text-white text-xs py-2 px-4 text-center font-medium shadow-sm">
+        <span class="inline-flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-yellow-300 animate-ping"></span>
+            <span>⚡ Automated Instant Airtime API Live: MTN, Telecel & AT Ghana Supported!</span>
+        </span>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2 text-xl font-black tracking-tight text-white group">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-emerald-600 flex items-center justify-center text-slate-900 shadow-md group-hover:scale-105 transition-transform">
+                    <i class="fa-solid font-bold fa-bolt text-lg text-white"></i>
+                </div>
+                <span>Credit<span class="text-brand-500"> Plug</span><span class="text-xs ml-1 px-1.5 py-0.5 rounded bg-brand-500/20 text-brand-400 font-bold border border-brand-500/30">GH</span></span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#how-it-works" class="hover:text-brand-400 transition-colors">How It Works</a>
+                <a href="#tasks" class="hover:text-brand-400 transition-colors">Tasks & Rewards</a>
+                <a href="#cashouts" class="hover:text-brand-400 transition-colors">Live Cashouts</a>
+                <a href="#faq" class="hover:text-brand-400 transition-colors">FAQ</a>
+            </nav>
+
+            <!-- CTA Buttons -->
+            <div class="hidden md:flex items-center gap-3">
+                <button onclick="openModal('signup')" class="text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 transition-colors">Log In</button>
+                <button onclick="openModal('signup')" class="text-sm font-bold bg-brand-500 hover:bg-brand-600 text-slate-950 px-4 py-2.5 rounded-xl shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 transition-all hover:-translate-y-0.5 active:translate-y-0">
+                    Get Started Free
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white p-2 rounded-lg hover:bg-slate-800 transition-colors" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800/95 border-b border-slate-700 px-4 py-5 space-y-4">
+            <a href="#how-it-works" class="block text-slate-200 font-medium hover:text-brand-400" onclick="toggleMobileMenu()">How It Works</a>
+            <a href="#tasks" class="block text-slate-200 font-medium hover:text-brand-400" onclick="toggleMobileMenu()">Tasks & Rewards</a>
+            <a href="#cashouts" class="block text-slate-200 font-medium hover:text-brand-400" onclick="toggleMobileMenu()">Live Cashouts</a>
+            <a href="#faq" class="block text-slate-200 font-medium hover:text-brand-400" onclick="toggleMobileMenu()">FAQ</a>
+            <div class="pt-2 border-t border-slate-700 flex flex-col gap-2">
+                <button onclick="openModal('signup'); toggleMobileMenu();" class="w-full text-center font-bold bg-brand-500 text-slate-950 py-3 rounded-xl shadow-md">
+                    Create Free Account
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+        <!-- Background Ambient Glow -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Column Text -->
+                <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                    <!-- Ghanaian Target Badge -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-300 shadow-inner">
+                        <span>🇬🇭 Built for Ghanaian Students & Workers</span>
+                        <span class="text-slate-500">•</span>
+                        <span class="text-brand-400 font-bold">100% Free</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                        Earn Free <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-emerald-300">Airtime</span> with Quick Micro-Tasks & Surveys
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Spend 5–10 minutes completing low-data web visits, quick polls, and micro-tasks. Get instant airtime top-ups sent directly to your phone number starting from just <span class="text-amber-400 font-bold bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20">GH₵ 2.00</span>.
+                    </p>
+
+                    <!-- Network Logos / Badges Bar -->
+                    <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3 text-xs font-bold">
+                        <span class="text-slate-400 font-medium mr-1">Instant Cashout To:</span>
+                        <!-- MTN -->
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-yellow-400 text-slate-950 shadow-sm font-black">
+                            <i class="fa-solid fa-signal"></i>
+                            <span>MTN Airtime</span>
+                        </div>
+                        <!-- Telecel -->
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 text-white shadow-sm font-black">
+                            <i class="fa-solid fa-tower-cell"></i>
+                            <span>Telecel</span>
+                        </div>
+                        <!-- AT Ghana -->
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-700 text-white shadow-sm font-black">
+                            <i class="fa-solid fa-wifi"></i>
+                            <span>AT Ghana</span>
+                        </div>
+                    </div>
+
+                    <!-- CTA Action Row -->
+                    <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <button onclick="openModal('signup')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-500 to-emerald-600 hover:from-brand-600 hover:to-emerald-700 text-slate-950 font-extrabold text-lg shadow-xl shadow-brand-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+                            <span>Start Earning Now</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </button>
+                        <a href="#how-it-works" class="w-full sm:w-auto px-6 py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-center border border-slate-700 transition-colors">
+                            How It Works
+                        </a>
+                    </div>
+
+                    <!-- Platform Stats -->
+                    <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-800/80 max-w-lg mx-auto lg:mx-0 text-center lg:text-left">
+                        <div>
+                            <div class="text-xl sm:text-2xl font-black text-white">GH₵ 2.00</div>
+                            <div class="text-xs text-slate-400">Min. Payout</div>
+                        </div>
+                        <div>
+                            <div class="text-xl sm:text-2xl font-black text-brand-400">Instant</div>
+                            <div class="text-xs text-slate-400">API Top-Up</div>
+                        </div>
+                        <div>
+                            <div class="text-xl sm:text-2xl font-black text-white">0 Pesewas</div>
+                            <div class="text-xs text-slate-400">User Deposit Fees</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column Interactive Preview Card -->
+                <div class="lg:col-span-5 relative">
+                    <!-- Glassmorphism Card Frame -->
+                    <div class="bg-slate-800/80 border border-slate-700/80 rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative z-10 space-y-5 animate-pulse-glow">
+                        
+                        <!-- Header Inside Mock Screen -->
+                        <div class="flex items-center justify-between pb-4 border-b border-slate-700">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-brand-400 font-bold">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-white">Kofi Mensah</div>
+                                    <div class="text-xs text-slate-400">+233 24 **** 891</div>
+                                </div>
+                            </div>
+                            <div class="bg-brand-500/10 border border-brand-500/30 px-3 py-1 rounded-full text-right">
+                                <div class="text-xs text-brand-400 font-semibold">Wallet Balance</div>
+                                <div class="text-base font-black text-brand-300">GH₵ 8.50</div>
+                            </div>
+                        </div>
+
+                        <!-- Sample Completed Task -->
+                        <div class="bg-slate-900/90 rounded-2xl p-4 border border-slate-700 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold bg-amber-400/20 text-amber-300 px-2.5 py-0.5 rounded-full border border-amber-400/30">
+                                    <i class="fa-solid fa-check-circle mr-1"></i> Survey Completed
+                                </span>
+                                <span class="text-xs text-slate-400">Just now</span>
+                            </div>
+                            <div class="flex items-center justify-between pt-1">
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">Consumer Trends Ghana</h4>
+                                    <p class="text-xs text-slate-400">CPX Research Router • 5 mins</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-emerald-400">+GH₵ 3.50</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cashout Button Simulation -->
+                        <div class="bg-gradient-to-br from-slate-900 to-slate-800 p-4 rounded-2xl border border-slate-700/80 space-y-3">
+                            <div class="text-xs font-semibold text-slate-300 flex items-center justify-between">
+                                <span>Redeem Airtime</span>
+                                <span class="text-brand-400">Ready to Send</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="flex-1 py-2.5 bg-yellow-400 text-slate-950 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 shadow">
+                                    <i class="fa-solid fa-mobile-screen"></i>
+                                    <span>MTN 5.00 GHS</span>
+                                </button>
+                                <button class="px-3 py-2.5 bg-brand-500/20 text-brand-300 rounded-xl font-bold text-xs border border-brand-500/40">
+                                    Instant API
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <span class="text-xs text-slate-400 flex items-center justify-center gap-1">
+                                <i class="fa-solid fa-shield-halved text-brand-400"></i>
+                                <span>Secured by Arkesel & Supabase Cloud</span>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Cashouts Ticker Feed Section -->
+    <section id="cashouts" class="bg-slate-950 py-6 border-y border-slate-800 relative">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center gap-4">
+            <div class="flex items-center gap-2 text-xs font-black text-brand-400 uppercase tracking-wider shrink-0 bg-brand-500/10 px-3 py-1.5 rounded-lg border border-brand-500/20">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>Live Ghanaian Cashouts:</span>
+            </div>
+
+            <!-- Ticker Container -->
+            <div class="w-full overflow-hidden ticker-wrap">
+                <div id="payout-ticker" class="flex items-center gap-6 text-xs text-slate-300 whitespace-nowrap transition-transform duration-700">
+                    <!-- JavaScript dynamically injects real-time payouts here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-slate-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Simple & Fast</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">How To Earn Airtime in 3 Steps</p>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">No bank account or credit card needed. Just your Ghanaian phone number.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 relative">
+                
+                <!-- Step 1 -->
+                <div class="bg-slate-800/60 rounded-3xl p-8 border border-slate-700/60 relative flex flex-col justify-between hover:border-brand-500/40 transition-colors group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-2xl font-black mb-6 group-hover:scale-110 transition-transform">
+                            1
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Create Your Account</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Sign up in 30 seconds using your phone number and email. No complex documentation or verification fees required.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-700/50 text-xs font-semibold text-brand-400 flex items-center gap-1">
+                        <span>Takes 30 seconds</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-slate-800/60 rounded-3xl p-8 border border-slate-700/60 relative flex flex-col justify-between hover:border-brand-500/40 transition-colors group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-2xl font-black mb-6 group-hover:scale-110 transition-transform">
+                            2
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Complete Quick Tasks</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Pick from surveys, 15-second web surfing (PTC), short video clips, or daily trivia. Each completed task adds pesewas to your wallet.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-700/50 text-xs font-semibold text-brand-400 flex items-center gap-1">
+                        <span>Low mobile data usage</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-slate-800/60 rounded-3xl p-8 border border-slate-700/60 relative flex flex-col justify-between hover:border-brand-500/40 transition-colors group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center text-2xl font-black mb-6 group-hover:scale-110 transition-transform">
+                            3
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Instant Airtime Delivery</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Once your wallet reaches GH₵ 2.00, hit "Redeem". Our developer API instantly tops up your MTN, Telecel, or AT line.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-700/50 text-xs font-semibold text-brand-400 flex items-center gap-1">
+                        <span>Automated 24/7 API</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Tasks & Earning Types Grid Section -->
+    <section id="tasks" class="py-20 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Multiple Earning Routes</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Tasks Built for Everyone</p>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">Choose high-paying market surveys or fast 100% completion web tasks.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Task Card 1: Surveys -->
+                <div class="bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-6 transition-all space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-400/10 border border-amber-400/30 text-amber-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-bold text-white text-lg">Market Surveys</h3>
+                            <span class="text-[10px] font-extrabold bg-brand-500/20 text-brand-300 px-2 py-0.5 rounded">High Pay</span>
+                        </div>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            Share your opinions on brand products and services in Ghana.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">Avg. Payout:</span>
+                        <span class="font-extrabold text-amber-400">GH₵ 1.50 – 8.00</span>
+                    </div>
+                </div>
+
+                <!-- Task Card 2: Web Surfing / PTC -->
+                <div class="bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-6 transition-all space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/30 text-brand-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-bold text-white text-lg">Web Surfing (PTC)</h3>
+                            <span class="text-[10px] font-extrabold bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded">100% Pass</span>
+                        </div>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            Visit partner websites for 15–30 seconds. Zero screen-outs guaranteed.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">Avg. Payout:</span>
+                        <span class="font-extrabold text-brand-400">GH₵ 0.05 – 0.20</span>
+                    </div>
+                </div>
+
+                <!-- Task Card 3: Video Clips -->
+                <div class="bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-6 transition-all space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-bold text-white text-lg">Rewarded Clips</h3>
+                            <span class="text-[10px] font-extrabold bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">Fast</span>
+                        </div>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            Watch short video ads on your phone browser to fill cashout gaps.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">Avg. Payout:</span>
+                        <span class="font-extrabold text-purple-300">GH₵ 0.02 – 0.10</span>
+                    </div>
+                </div>
+
+                <!-- Task Card 4: Daily Streaks -->
+                <div class="bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-6 transition-all space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <h3 class="font-bold text-white text-lg">Daily Streaks</h3>
+                            <span class="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Daily Bonus</span>
+                        </div>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            Log in every day and answer a 5-question daily trivia quiz for free top-ups.
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-800 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">Bonus:</span>
+                        <span class="font-extrabold text-emerald-400">GH₵ 0.05 / Day</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Offerwall Compliance Section -->
+    <section class="py-16 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-3xl p-8 border border-slate-700/80 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="space-y-3 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-400 text-xs font-bold border border-brand-500/20">
+                        <i class="fa-solid fa-shield-halved"></i> Official Publisher Network Platform
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Verified Market Research Partner</h3>
+                    <p class="text-slate-400 text-sm max-w-xl">
+                        Our platform connects users directly with global market research networks like Lootably, CPX Research, and BitLabs while keeping mobile data overhead minimal.
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <div class="px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-slate-300 text-xs font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-lock text-brand-400"></i> HTTPS SSL Encrypted
+                    </div>
+                    <div class="px-4 py-3 rounded-2xl bg-slate-900 border border-slate-700 text-slate-300 text-xs font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-amber-400"></i> Automated Arkesel API
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-slate-950 border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Got Questions?</h2>
+                <p class="text-3xl font-extrabold text-white">Frequently Asked Questions</p>
+            </div>
+
+            <!-- FAQ Accordion List -->
+            <div class="space-y-4" id="faq-accordion">
+                
+                <!-- FAQ Item 1 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors">
+                    <button onclick="toggleFaq(1)" class="w-full px-6 py-5 text-left font-bold text-white flex items-center justify-between gap-4 hover:bg-slate-800/50">
+                        <span>Is Credit Plug completely free to use?</span>
+                        <i id="faq-icon-1" class="fa-solid fa-chevron-down text-brand-400 text-sm transition-transform"></i>
+                    </button>
+                    <div id="faq-answer-1" class="hidden px-6 pb-5 text-slate-400 text-sm leading-relaxed border-t border-slate-800/60 pt-4">
+                        Yes, 100% free! You will never be asked to deposit money or pay any registration fee. Payouts are funded by market research companies and ad networks who reward users for their time.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors">
+                    <button onclick="toggleFaq(2)" class="w-full px-6 py-5 text-left font-bold text-white flex items-center justify-between gap-4 hover:bg-slate-800/50">
+                        <span>What is the minimum cashout amount?</span>
+                        <i id="faq-icon-2" class="fa-solid fa-chevron-down text-brand-400 text-sm transition-transform"></i>
+                    </button>
+                    <div id="faq-answer-2" class="hidden px-6 pb-5 text-slate-400 text-sm leading-relaxed border-t border-slate-800/60 pt-4">
+                        You can request an airtime top-up as soon as your account balance reaches <strong class="text-brand-300">GH₵ 2.00</strong>.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors">
+                    <button onclick="toggleFaq(3)" class="w-full px-6 py-5 text-left font-bold text-white flex items-center justify-between gap-4 hover:bg-slate-800/50">
+                        <span>Which Ghanaian mobile networks are supported?</span>
+                        <i id="faq-icon-3" class="fa-solid fa-chevron-down text-brand-400 text-sm transition-transform"></i>
+                    </button>
+                    <div id="faq-answer-3" class="hidden px-6 pb-5 text-slate-400 text-sm leading-relaxed border-t border-slate-800/60 pt-4">
+                        We support direct airtime top-ups across all major networks in Ghana: <strong>MTN Ghana</strong>, <strong>Telecel Ghana</strong>, and <strong>AT Ghana (AirtelTigo)</strong>.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden transition-colors">
+                    <button onclick="toggleFaq(4)" class="w-full px-6 py-5 text-left font-bold text-white flex items-center justify-between gap-4 hover:bg-slate-800/50">
+                        <span>How fast will I receive my airtime after redeeming?</span>
+                        <i id="faq-icon-4" class="fa-solid fa-chevron-down text-brand-400 text-sm transition-transform"></i>
+                    </button>
+                    <div id="faq-answer-4" class="hidden px-6 pb-5 text-slate-400 text-sm leading-relaxed border-t border-slate-800/60 pt-4">
+                        Our payouts are fully automated via developer API integrations. Once submitted, airtime arrives on your mobile line within 10 to 60 seconds.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Sign Up Modal Overlay -->
+    <div id="signup-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl space-y-6">
+            
+            <button onclick="closeModal('signup')" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center mx-auto text-xl font-bold">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="text-2xl font-black text-white">Join Credit Plug</h3>
+                <p class="text-xs text-slate-400">Start earning airtime in less than a minute</p>
+            </div>
+
+            <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Full Name</label>
+                    <input type="text" required placeholder="e.g. Kwame Mensah" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Ghanaian Phone Number</label>
+                    <input type="tel" required placeholder="e.g. 024XXXXXXX" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Network</label>
+                    <select required class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors">
+                        <option value="mtn">MTN Ghana</option>
+                        <option value="telecel">Telecel Ghana</option>
+                        <option value="at">AT Ghana</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">Password</label>
+                    <input type="password" required placeholder="••••••••" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-500 transition-colors">
+                </div>
+
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-slate-950 font-extrabold text-sm shadow-lg transition-all">
+                    Create Account & Claim Bonus
+                </button>
+            </form>
+
+            <p class="text-[11px] text-center text-slate-500">
+                By registering, you agree to our Terms of Service & Privacy Policy.
+            </p>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast Box -->
+    <div id="toast-notify" class="fixed bottom-5 right-5 z-50 bg-brand-500 text-slate-950 px-5 py-3 rounded-2xl shadow-2xl font-bold text-sm hidden flex items-center gap-2 transform translate-y-10 transition-all">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-message">Account created successfully!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 py-12 text-slate-400 text-xs">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                <div>
+                    <a href="#" class="text-lg font-black text-white tracking-tight">
+                        Air<span class="text-brand-500">Reward</span> GH
+                    </a>
+                    <p class="text-slate-500 text-xs mt-1">Empowering Ghanaian students and workers through micro-rewards.</p>
+                </div>
+
+                <!-- Footer Navigation Links required for Offerwall Approval -->
+                <div class="flex flex-wrap justify-center gap-6 text-slate-400 font-medium">
+                    <a href="#" onclick="showInfoToast('Terms of Service loaded.')" class="hover:text-white">Terms of Service</a>
+                    <a href="#" onclick="showInfoToast('Privacy Policy loaded.')" class="hover:text-white">Privacy Policy</a>
+                    <a href="#" onclick="showInfoToast('Publisher Disclosure loaded.')" class="hover:text-white">Publisher Disclosure</a>
+                    <a href="#" onclick="showInfoToast('Contact Support: support@ceditplug.com')" class="hover:text-white">Contact Support</a>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
+                <p>&copy; 2026 Credit Plug. All rights reserved.</p>
+                <p class="flex items-center gap-1">
+                    <span>Designed for low mobile data usage</span>
+                    <i class="fa-solid fa-leaf text-brand-500 text-[10px]"></i>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* Mobile Menu Drawer Toggle */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', toggleMobileMenu);
+
+        /* FAQ Accordion Toggle Logic */
+        function toggleFaq(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                answer.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        /* Modal Open / Close Logic */
+        function openModal(modalId) {
+            document.getElementById(`${modalId}-modal`).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(`${modalId}-modal`).classList.add('hidden');
+        }
+
+        /* Toast Alert Notification */
+        function showInfoToast(msg) {
+            const toast = document.getElementById('toast-notify');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        /* Form Submission Handler */
+        function handleAuthSubmit(event) {
+            event.preventDefault();
+            closeModal('signup');
+            showInfoToast('🎉 Account registered! Logging you in...');
+        }
+
+        /* Live Ghanaian Payout Feed Simulation */
+        const sampleNames = ['Kofi A.', 'Ama K.', 'Kwesi M.', 'Esi B.', 'Yaw O.', 'Abena S.', 'Kwame T.', 'Akosua P.'];
+        const sampleNetworks = ['MTN Airtime', 'Telecel Airtime', 'AT Ghana Airtime'];
+        const sampleAmounts = ['2.00 GHS', '5.00 GHS', '3.50 GHS', '10.00 GHS', '4.00 GHS'];
+
+        function generatePayoutItem() {
+            const name = sampleNames[Math.floor(Math.random() * sampleNames.length)];
+            const net = sampleNetworks[Math.floor(Math.random() * sampleNetworks.length)];
+            const amt = sampleAmounts[Math.floor(Math.random() * sampleAmounts.length)];
+            const mins = Math.floor(Math.random() * 5) + 1;
+
+            return `
+                <div class="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full shrink-0">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span class="font-bold text-white">${name}</span>
+                    <span class="text-slate-400">cashed out</span>
+                    <span class="font-extrabold text-emerald-400">${amt} ${net}</span>
+                    <span class="text-slate-500 text-[10px]">${mins}m ago</span>
+                </div>
+            `;
+        }
+
+        function populateTicker() {
+            const ticker = document.getElementById('payout-ticker');
+            if(!ticker) return;
+            let html = '';
+            for(let i = 0; i < 8; i++) {
+                html += generatePayoutItem();
+            }
+            ticker.innerHTML = html;
+        }
+
+        // Initialize ticker on load and refresh items periodically
+        window.onload = function() {
+            populateTicker();
+            setInterval(populateTicker, 12000);
+        };
+    </script>
+</body>
+</html>
