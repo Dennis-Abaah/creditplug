@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Credit Plug — Earn money completing surveys and withdraw as mobile airtime." />
+  <title>Credit Plug</title>
+  <link rel="icon" href="favicon.png" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       AUTH SCREENS
+  ══════════════════════════════════════════════ -->
+  <div id="auth-container" class="auth-container">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="auth-logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#0F172A"/>
+            <path d="M8 16C8 11.582 11.582 8 16 8C18.55 8 20.826 9.168 22.328 11H19C18.448 11 18 11.448 18 12C18 12.552 18.448 13 19 13H24C24.552 13 25 12.552 25 12V7C25 6.448 24.552 6 24 6C23.448 6 23 6.448 23 7V9.528C21.14 7.384 18.428 6 15.5 6C10.253 6 6 10.253 6 15.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M24 16C24 20.418 20.418 24 16 24C13.45 24 11.174 22.832 9.672 21H13C13.552 21 14 20.552 14 20C14 19.448 13.552 19 13 19H8C7.448 19 7 19.448 7 20V25C7 25.552 7.448 26 8 26C8.552 26 9 25.552 9 25V22.472C10.86 24.616 13.572 26 16.5 26C21.747 26 26 21.747 26 16.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h1 class="auth-title">Credit Plug</h1>
+        <p class="auth-subtitle">Earn from surveys. Withdraw as airtime.</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form" autocomplete="on">
+        <div class="form-group">
+          <label for="login-email">Email address</label>
+          <input type="email" id="login-email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="login-btn">Sign In</button>
+        <p class="auth-switch">Don't have an account? <a href="#" id="show-signup">Create one</a></p>
+        <div id="login-error" class="form-error" role="alert"></div>
+      </form>
+
+      <!-- Sign Up Form -->
+      <form id="signup-form" class="auth-form hidden" autocomplete="on">
+        <div class="form-group">
+          <label for="signup-email">Email address</label>
+          <input type="email" id="signup-email" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="signup-phone">Phone Number (for Airtime Receiving)</label>
+          <input type="tel" id="signup-phone" placeholder="0241234567" required autocomplete="tel" />
+        </div>
+        <div class="form-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" placeholder="Min. 8 characters" required minlength="8" autocomplete="new-password" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="signup-btn">Create Account</button>
+        <p class="auth-switch">Already have an account? <a href="#" id="show-login">Sign in</a></p>
+        <div id="signup-error" class="form-error" role="alert"></div>
+        <div id="signup-success" class="form-success hidden" role="status"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       MAIN APPLICATION
+  ══════════════════════════════════════════════ -->
+  <div id="app-container" class="app-container hidden">
+
+    <!-- Desktop Navigation Bar (Visible on Desktop) -->
+    <header class="desktop-nav">
+      <div class="desktop-nav-brand">
+        <div class="auth-logo">
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#0F172A"/>
+            <path d="M8 16C8 11.582 11.582 8 16 8C18.55 8 20.826 9.168 22.328 11H19C18.448 11 18 11.448 18 12C18 12.552 18.448 13 19 13H24C24.552 13 25 12.552 25 12V7C25 6.448 23 6.448 23 7V9.528C21.14 7.384 18.428 6 15.5 6C10.253 6 6 10.253 6 15.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M24 16C24 20.418 20.418 24 16 24C13.45 24 11.174 22.832 9.672 21H13C13.552 21 14 20.552 14 20C14 19.448 13.552 19 13 19H8C7.448 19 7 19.448 7 20V25C7 25.552 7.448 26 8 26C8.552 26 9 25.552 9 25V22.472C10.86 24.616 13.572 26 16.5 26C21.747 26 26 21.747 26 16.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="desktop-brand-title">Credit Plug</span>
+      </div>
+
+      <nav class="desktop-menu">
+        <button class="nav-item active" data-tab="home">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Surveys & Earn</span>
+        </button>
+        <button class="nav-item" data-tab="withdraw">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+          <span>Withdraw Airtime</span>
+        </button>
+        <button class="nav-item" data-tab="profile">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span>Profile</span>
+        </button>
+      </nav>
+
+      <div class="desktop-nav-right">
+        <button class="btn btn-outline btn-sm logout-btn">Log Out</button>
+      </div>
+    </header>
+
+    <!-- ─── HOME TAB ─── -->
+    <section id="tab-home" class="tab-content active">
+      <div class="desktop-grid-home">
+        <header class="app-header">
+          <div class="header-top">
+            <span class="header-greeting" id="greeting-text">Good morning</span>
+            <span class="header-badge">Credit Plug</span>
+          </div>
+          <div class="balance-card">
+            <p class="balance-label">Total Balance</p>
+            <h2 class="balance-amount" id="home-balance">GHS 0.00</h2>
+          </div>
+          <div class="desktop-quick-info">
+            <div class="info-pill">
+              <span class="pill-dot"></span> Instant Airtime Payouts
+            </div>
+            <p class="info-text">Complete CPX Research surveys to accumulate GHS balance and withdraw directly to your MTN, Telecel, or AT phone number.</p>
+          </div>
+        </header>
+
+        <div class="section-block main-survey-block">
+          <div class="section-header">
+            <h3>Earn from Surveys</h3>
+            <span class="section-tag">Powered by CPX Research</span>
+          </div>
+          <div class="survey-container" id="cpx-container">
+            <div class="survey-placeholder" id="cpx-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M9 9h6v6H9z"/>
+              </svg>
+              <p>Loading surveys…</p>
+            </div>
+            <!-- CPX Research iframe will be injected here by app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── WITHDRAW TAB ─── -->
+    <section id="tab-withdraw" class="tab-content">
+      <header class="app-header page-header-desktop">
+        <h2 class="page-title">Withdraw Airtime</h2>
+        <p class="page-desc">Convert your balance to instant mobile airtime across any Ghana network</p>
+      </header>
+
+      <div class="desktop-grid-withdraw">
+        <div class="section-block withdraw-card-block">
+          <div class="withdraw-balance-row">
+            <span class="wb-label">Available Balance</span>
+            <span class="wb-amount" id="withdraw-balance">GHS 0.00</span>
+          </div>
+
+          <form id="withdraw-form" class="withdraw-form">
+            <div class="form-group">
+              <label for="withdraw-network">Network Provider</label>
+              <select id="withdraw-network" class="form-control">
+                <option value="AUTO">Auto-Detect Network</option>
+                <option value="MTN">MTN Ghana</option>
+                <option value="TELECEL">Telecel Ghana</option>
+                <option value="AT">AT (AirtelTigo)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="withdraw-amount">Amount (GHS)</label>
+              <input type="number" id="withdraw-amount" placeholder="Min. 3.00" min="3" step="0.01" required />
+            </div>
+            <button type="submit" class="btn btn-primary btn-full" id="withdraw-btn">
+              Withdraw via Airtime
+            </button>
+            <div id="withdraw-error" class="form-error" role="alert"></div>
+            <div id="withdraw-success" class="form-success hidden" role="status"></div>
+          </form>
+        </div>
+
+        <div class="section-block tx-card-block">
+          <div class="section-header">
+            <h3>Transaction History</h3>
+          </div>
+          <div id="tx-list" class="tx-list">
+            <div class="tx-empty" id="tx-empty">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+              <p>No transactions yet</p>
+            </div>
+            <!-- Transaction items rendered by app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── PROFILE TAB ─── -->
+    <section id="tab-profile" class="tab-content">
+      <header class="app-header page-header-desktop">
+        <h2 class="page-title">Profile & Preferences</h2>
+        <p class="page-desc">Manage your account details and view overall activity</p>
+      </header>
+
+      <div class="desktop-profile-wrapper">
+        <div class="section-block">
+          <div class="profile-info-card">
+            <div class="profile-avatar" id="profile-avatar">U</div>
+            <div class="profile-details">
+              <span class="profile-email" id="profile-email">—</span>
+              <span class="profile-phone" id="profile-phone">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-block">
+          <div class="section-header">
+            <h3>Account Statistics</h3>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-label">Total Earned</span>
+              <span class="stat-value" id="stat-earned">GHS 0.00</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Total Withdrawn</span>
+              <span class="stat-value" id="stat-withdrawn">GHS 0.00</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Current Balance</span>
+              <span class="stat-value" id="stat-balance">GHS 0.00</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Surveys Done</span>
+              <span class="stat-value" id="stat-surveys">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-block logout-block-desktop">
+          <button class="btn btn-outline btn-full logout-btn" id="logout-btn">Log Out</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── BOTTOM NAVIGATION (MOBILE ONLY) ─── -->
+    <nav class="bottom-nav" id="bottom-nav">
+      <button class="nav-item active" data-tab="home" id="nav-home">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" data-tab="withdraw" id="nav-withdraw">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        <span>Withdraw</span>
+      </button>
+      <button class="nav-item" data-tab="profile" id="nav-profile">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       TOAST NOTIFICATION
+  ══════════════════════════════════════════════ -->
+  <div id="toast" class="toast hidden" role="alert"></div>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
