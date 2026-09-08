@@ -623,52 +623,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ═══════════════════════════════════════════════
-     TIMEWALL OFFERWALL (TASKS)
+     TIMEWALL OFFERWALL (TASKS HUB)
      ═══════════════════════════════════════════════ */
 
-  function loadTimeWallOffers(forceReload = false) {
+  function launchTimeWall() {
+    if (!currentUser) {
+      showToast('Please sign in to access tasks');
+      return;
+    }
+    const timewallUrl = `https://timewall.io/wall?pub_id=${TIMEWALL_PUB_ID}&subid=${currentUser.id}`;
+    window.open(timewallUrl, '_blank', 'noopener,noreferrer');
+  }
+
+  function loadTimeWallOffers() {
     if (!currentUser) return;
 
-    const container = $('#timewall-container');
-    const placeholder = $('#timewall-placeholder');
-    if (!container) return;
-
-    // If force reload, remove existing iframe
-    if (forceReload) {
-      const existingIframe = container.querySelector('iframe');
-      if (existingIframe) existingIframe.remove();
-      if (placeholder) placeholder.classList.remove('hidden');
+    // Update username tag on hero card
+    const userTag = $('#thc-user-tag');
+    if (userTag) {
+      const uname = userProfile?.username || currentUser.user_metadata?.username || currentUser.email?.split('@')[0] || 'your account';
+      userTag.textContent = uname.startsWith('@') ? uname : `@${uname}`;
     }
 
-    // Prevent duplicate iframes
-    if (container.querySelector('iframe')) return;
+    // Connect Hero Launch Button
+    const heroBtn = $('#open-timewall-hero-btn');
+    if (heroBtn && !heroBtn.dataset.bound) {
+      heroBtn.dataset.bound = 'true';
+      heroBtn.addEventListener('click', () => {
+        launchTimeWall();
+      });
+    }
 
-    // Build TimeWall embed URL with user's UUID as subid
-    const timewallUrl = `https://timewall.io/wall?pub_id=${TIMEWALL_PUB_ID}&subid=${currentUser.id}`;
-
-    // Create iframe
-    const iframe = document.createElement('iframe');
-    iframe.src = timewallUrl;
-    iframe.title = 'TimeWall Tasks & Offers';
-    iframe.setAttribute('loading', 'lazy');
-    iframe.setAttribute('allow', 'clipboard-write');
-    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation');
-
-    iframe.addEventListener('load', () => {
-      if (placeholder) placeholder.classList.add('hidden');
+    // Connect Category Cards
+    const catCards = $$('.task-cat-card[data-launch="true"]');
+    catCards.forEach(card => {
+      if (!card.dataset.bound) {
+        card.dataset.bound = 'true';
+        card.addEventListener('click', () => {
+          launchTimeWall();
+        });
+      }
     });
 
-    container.appendChild(iframe);
+    // Connect Refresh Balance button
+    const refreshBalBtn = $('#refresh-tasks-balance-btn');
+    if (refreshBalBtn && !refreshBalBtn.dataset.bound) {
+      refreshBalBtn.dataset.bound = 'true';
+      refreshBalBtn.addEventListener('click', async () => {
+        setLoading(refreshBalBtn, true);
+        await loadBalance();
+        await loadTransactions();
+        setLoading(refreshBalBtn, false);
+        showToast('Balance updated!');
+      });
+    }
   }
 
-  // Reload Tasks button handler
-  const reloadTasksBtn = $('#reload-tasks-btn');
-  if (reloadTasksBtn) {
-    reloadTasksBtn.addEventListener('click', () => {
-      loadTimeWallOffers(true);
-      showToast('Refreshing tasks…');
-    });
-  }
+  // Auto-refresh balance and transactions when user returns from TimeWall
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && currentUser) {
+      loadBalance();
+      loadTransactions();
+    }
+  });
 
 
   /* ═══════════════════════════════════════════════
