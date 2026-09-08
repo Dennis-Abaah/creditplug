@@ -139,8 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
   async function enterApp() {
     if (authContainer) authContainer.classList.add('hidden');
     if (appContainer) appContainer.classList.remove('hidden');
-    const greetEl = $('#greeting-text');
-    if (greetEl) greetEl.textContent = getGreeting();
 
     await loadUserProfile();
     await loadBalance();
@@ -158,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       console.log('Signup form submitted');
 
+      const username = $('#signup-username') ? $('#signup-username').value.trim() : '';
       const email    = $('#signup-email').value.trim();
       const phone    = $('#signup-phone').value.trim();
       const password = $('#signup-password').value;
@@ -168,8 +167,13 @@ document.addEventListener('DOMContentLoaded', () => {
       errEl.textContent = '';
       succEl.classList.add('hidden');
 
+      if (!username) {
+        errEl.textContent = 'Username is required.';
+        return;
+      }
+
       if (!email) {
-        errEl.textContent = 'Email is required.';
+        errEl.textContent = 'Email address is required.';
         return;
       }
 
@@ -186,12 +190,28 @@ document.addEventListener('DOMContentLoaded', () => {
       setLoading(btn, true);
 
       try {
+        // Pre-check if phone number is already registered in users table
+        const { data: existingPhoneUser, error: phoneCheckErr } = await supabaseClient
+          .from('users')
+          .select('id')
+          .eq('phone_number', phone)
+          .maybeSingle();
+
+        if (existingPhoneUser) {
+          errEl.textContent = 'This phone number is already registered to another account.';
+          setLoading(btn, false);
+          return;
+        }
+
         console.log('Calling supabase.auth.signUp...');
         const { data, error } = await supabaseClient.auth.signUp({
           email,
           password,
           options: {
-            data: { phone_number: phone }
+            data: {
+              username: username,
+              phone_number: phone
+            }
           }
         });
 
@@ -199,7 +219,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (error) {
           console.error('Signup error:', error);
-          errEl.textContent = error.message;
+          if (error.message.includes('unique') || error.message.includes('already registered')) {
+            errEl.textContent = 'An account with this email or phone number already exists.';
+          } else {
+            errEl.textContent = error.message;
+          }
           return;
         }
 
@@ -297,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ═══════════════════════════════════════════════
-     BOTTOM NAV — TAB SWITCHING
+     BOTTOM NAV & HEADER — TAB SWITCHING
      ═══════════════════════════════════════════════ */
 
   function switchTab(tab) {
@@ -316,13 +340,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  navItems.forEach(item => {
-    item.addEventListener('click', () => switchTab(item.dataset.tab));
+  // Handle all nav items (mobile bottom nav, desktop menu nav, header action buttons)
+  document.addEventListener('click', (e) => {
+    const tabBtn = e.target.closest('[data-tab]');
+    if (tabBtn) {
+      const tab = tabBtn.dataset.tab;
+      if (tab) switchTab(tab);
+    }
+  });
+
+  // Scroll to surveys button on Home
+  const scrollToSurveysBtn = $('#scroll-to-surveys');
+  if (scrollToSurveysBtn) {
+    scrollToSurveysBtn.addEventListener('click', () => {
+      const cpxContainer = $('#cpx-container');
+      if (cpxContainer) cpxContainer.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+
+  /* ═══════════════════════════════════════════════
+     TELCO NETWORK RADIO SELECTOR
+     ═══════════════════════════════════════════════ */
+
+  const telcoCards = $$('.telco-card');
+  const withdrawNetworkInput = $('#withdraw-network');
+
+  telcoCards.forEach(card => {
+    card.addEventListener('click', () => {
+      telcoCards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      const selectedNet = card.dataset.network || 'AUTO';
+      if (withdrawNetworkInput) {
+        withdrawNetworkInput.value = selectedNet;
+      }
+      console.log('Selected network:', selectedNet);
+    });
   });
 
 
   /* ═══════════════════════════════════════════════
-     USER PROFILE
+     USER PROFILE & UPDATE
      ═══════════════════════════════════════════════ */
 
   async function loadUserProfile() {
@@ -336,11 +394,12 @@ document.addEventListener('DOMContentLoaded', () => {
         .single();
 
       if (error && error.code === 'PGRST116') {
-        // Profile doesn't exist yet — create it (triggered by signup)
+        // Profile doesn't exist yet — create it
         const phone = currentUser.user_metadata?.phone_number || '';
+        const username = currentUser.user_metadata?.username || currentUser.email?.split('@')[0] || 'user';
         const { data: newProfile } = await supabaseClient
           .from('users')
-          .insert({ id: currentUser.id, phone_number: phone, balance: 0 })
+          .insert({ id: currentUser.id, username: username, phone_number: phone, balance: 0 })
           .select()
           .single();
         userProfile = newProfile;
@@ -351,15 +410,113 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Load profile error:', err);
     }
 
-    // Populate profile UI
-    if (currentUser) {
-      const emailEl = $('#profile-email');
-      const phoneEl = $('#profile-phone');
-      const avatarEl = $('#profile-avatar');
-      if (emailEl) emailEl.textContent = currentUser.email || '—';
-      if (phoneEl) phoneEl.textContent = userProfile?.phone_number || '—';
-      if (avatarEl) avatarEl.textContent = (currentUser.email || 'U')[0].toUpperCase();
-    }
+    // Determine displayed username & initials
+    const rawUsername = userProfile?.username || currentUser.user_metadata?.username || currentUser.email?.split('@')[0] || 'user';
+    const displayUsername = rawUsername.startsWith('@') ? rawUsername : `@${rawUsername}`;
+    const initial = (rawUsername || 'U')[0].toUpperCase();
+
+    // Update Header metadata
+    const greetEl = $('#greeting-text');
+    const mainUserHandleEl = $('#main-user-handle');
+    const mainAvatarEl = $('#main-avatar');
+    const headerUsernameEl = $('#header-username');
+    const headerAvatarEl = $('#header-avatar');
+
+    if (greetEl) greetEl.textContent = getGreeting();
+    if (mainUserHandleEl) mainUserHandleEl.textContent = displayUsername;
+    if (mainAvatarEl) mainAvatarEl.textContent = initial;
+    if (headerUsernameEl) headerUsernameEl.textContent = displayUsername;
+    if (headerAvatarEl) headerAvatarEl.textContent = initial;
+
+    // Update Profile Tab metadata & inputs
+    const profileEmailEl = $('#profile-email');
+    const profilePhoneTextEl = $('#profile-phone-text');
+    const profileUsernameDisplayEl = $('#profile-username-display');
+    const profileAvatarEl = $('#profile-avatar');
+
+    const updateUsernameInput = $('#update-username');
+    const updatePhoneInput = $('#update-phone');
+
+    if (profileEmailEl) profileEmailEl.textContent = currentUser.email || '—';
+    if (profilePhoneTextEl) profilePhoneTextEl.textContent = userProfile?.phone_number || '—';
+    if (profileUsernameDisplayEl) profileUsernameDisplayEl.textContent = displayUsername;
+    if (profileAvatarEl) profileAvatarEl.textContent = initial;
+
+    if (updateUsernameInput) updateUsernameInput.value = rawUsername.replace(/^@/, '');
+    if (updatePhoneInput) updatePhoneInput.value = userProfile?.phone_number || '—';
+  }
+
+
+  /* ── Profile Update Form Listener ── */
+  const profileUpdateForm = $('#profile-update-form');
+  if (profileUpdateForm) {
+    profileUpdateForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!currentUser) return;
+
+      const newUsername = $('#update-username').value.trim();
+      const newPassword = $('#update-password').value;
+      const errEl = $('#profile-error');
+      const succEl = $('#profile-success');
+      const btn = $('#save-profile-btn');
+
+      errEl.textContent = '';
+      succEl.classList.add('hidden');
+
+      if (!newUsername) {
+        errEl.textContent = 'Username cannot be empty.';
+        return;
+      }
+
+      setLoading(btn, true);
+
+      try {
+        // 1. Update username in public.users table
+        const { error: dbErr } = await supabaseClient
+          .from('users')
+          .update({ username: newUsername })
+          .eq('id', currentUser.id);
+
+        if (dbErr) {
+          console.error('Update username error:', dbErr);
+          errEl.textContent = dbErr.message || 'Failed to update username.';
+          setLoading(btn, false);
+          return;
+        }
+
+        // Update local profile variable
+        if (userProfile) userProfile.username = newUsername;
+
+        // 2. If password provided, update auth password
+        if (newPassword) {
+          if (newPassword.length < 8) {
+            errEl.textContent = 'Password must be at least 8 characters.';
+            setLoading(btn, false);
+            return;
+          }
+          const { error: pwdErr } = await supabaseClient.auth.updateUser({ password: newPassword });
+          if (pwdErr) {
+            console.error('Update password error:', pwdErr);
+            errEl.textContent = `Username saved, but password update failed: ${pwdErr.message}`;
+            setLoading(btn, false);
+            await loadUserProfile();
+            return;
+          }
+          $('#update-password').value = '';
+        }
+
+        succEl.textContent = 'Profile details updated successfully!';
+        succEl.classList.remove('hidden');
+        showToast('Profile updated!');
+
+        await loadUserProfile();
+      } catch (err) {
+        console.error('Profile update exception:', err);
+        errEl.textContent = 'Network error. Please try again.';
+      }
+
+      setLoading(btn, false);
+    });
   }
 
   async function loadBalance() {

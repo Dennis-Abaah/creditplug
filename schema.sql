@@ -7,16 +7,24 @@
 -- ── 1. Users Table ─────────────────────────────
 -- Linked 1:1 to auth.users via `id`
 
-CREATE TABLE public.users (
+CREATE TABLE IF NOT EXISTS public.users (
   id            UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  username      TEXT NOT NULL DEFAULT '',
   phone_number  TEXT NOT NULL DEFAULT '',
   balance       NUMERIC(12, 2) NOT NULL DEFAULT 0.00,
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+-- Migration commands for existing tables:
+ALTER TABLE public.users ADD COLUMN IF NOT EXISTS username TEXT NOT NULL DEFAULT '';
+ALTER TABLE public.users DROP CONSTRAINT IF EXISTS users_phone_number_key;
+ALTER TABLE public.users DROP CONSTRAINT IF EXISTS unique_phone_number;
+ALTER TABLE public.users ADD CONSTRAINT unique_phone_number UNIQUE (phone_number);
+
 -- Index for fast lookups
-CREATE INDEX idx_users_id ON public.users(id);
+CREATE INDEX IF NOT EXISTS idx_users_id ON public.users(id);
+CREATE INDEX IF NOT EXISTS idx_users_phone ON public.users(phone_number);
 
 -- Auto-update `updated_at` on row changes
 CREATE OR REPLACE FUNCTION public.handle_updated_at()
@@ -27,6 +35,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS set_users_updated_at ON public.users;
 CREATE TRIGGER set_users_updated_at
   BEFORE UPDATE ON public.users
   FOR EACH ROW
@@ -35,7 +44,7 @@ CREATE TRIGGER set_users_updated_at
 
 -- ── 2. Transactions Table ──────────────────────
 
-CREATE TABLE public.transactions (
+CREATE TABLE IF NOT EXISTS public.transactions (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id     UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
   amount      NUMERIC(12, 2) NOT NULL,
@@ -46,9 +55,9 @@ CREATE TABLE public.transactions (
 );
 
 -- Indexes for common queries
-CREATE INDEX idx_transactions_user_id   ON public.transactions(user_id);
-CREATE INDEX idx_transactions_type      ON public.transactions(type);
-CREATE INDEX idx_transactions_created   ON public.transactions(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_transactions_user_id   ON public.transactions(user_id);
+CREATE INDEX IF NOT EXISTS idx_transactions_type      ON public.transactions(type);
+CREATE INDEX IF NOT EXISTS idx_transactions_created   ON public.transactions(created_at DESC);
 
 
 -- ── 3. Auto-create user profile on signup ──────
@@ -56,15 +65,20 @@ CREATE INDEX idx_transactions_created   ON public.transactions(created_at DESC);
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO public.users (id, phone_number)
+  INSERT INTO public.users (id, username, phone_number)
   VALUES (
     NEW.id,
+    COALESCE(NEW.raw_user_meta_data ->> 'username', ''),
     COALESCE(NEW.raw_user_meta_data ->> 'phone_number', '')
-  );
+  )
+  ON CONFLICT (id) DO UPDATE SET
+    username = EXCLUDED.username,
+    phone_number = EXCLUDED.phone_number;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW

@@ -34,14 +34,23 @@
       <!-- Login Form -->
       <form id="login-form" class="auth-form" autocomplete="on">
         <div class="form-group">
-          <label for="login-email">Email address</label>
+          <label for="login-email">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email address
+          </label>
           <input type="email" id="login-email" placeholder="you@example.com" required autocomplete="email" />
         </div>
         <div class="form-group">
-          <label for="login-password">Password</label>
+          <label for="login-password">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Password
+          </label>
           <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password" />
         </div>
-        <button type="submit" class="btn btn-primary btn-full" id="login-btn">Sign In</button>
+        <button type="submit" class="btn btn-primary btn-full" id="login-btn">
+          <span>Sign In</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
         <p class="auth-switch">Don't have an account? <a href="#" id="show-signup">Create one</a></p>
         <div id="login-error" class="form-error" role="alert"></div>
       </form>
@@ -49,18 +58,38 @@
       <!-- Sign Up Form -->
       <form id="signup-form" class="auth-form hidden" autocomplete="on">
         <div class="form-group">
-          <label for="signup-email">Email address</label>
+          <label for="signup-username">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Username
+          </label>
+          <input type="text" id="signup-username" placeholder="e.g. kwame_plug" required autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label for="signup-email">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email address
+          </label>
           <input type="email" id="signup-email" placeholder="you@example.com" required autocomplete="email" />
         </div>
         <div class="form-group">
-          <label for="signup-phone">Phone Number (for Airtime Receiving)</label>
+          <label for="signup-phone">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Phone Number (1 Account per Phone Number)
+          </label>
           <input type="tel" id="signup-phone" placeholder="0241234567" required autocomplete="tel" />
+          <span class="field-hint">Phone number is strictly locked to your account upon creation.</span>
         </div>
         <div class="form-group">
-          <label for="signup-password">Password</label>
+          <label for="signup-password">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Password
+          </label>
           <input type="password" id="signup-password" placeholder="Min. 8 characters" required minlength="8" autocomplete="new-password" />
         </div>
-        <button type="submit" class="btn btn-primary btn-full" id="signup-btn">Create Account</button>
+        <button type="submit" class="btn btn-primary btn-full" id="signup-btn">
+          <span>Create Account</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
         <p class="auth-switch">Already have an account? <a href="#" id="show-login">Sign in</a></p>
         <div id="signup-error" class="form-error" role="alert"></div>
         <div id="signup-success" class="form-success hidden" role="status"></div>
@@ -111,7 +140,14 @@
       </nav>
 
       <div class="desktop-nav-right">
-        <button class="btn btn-outline btn-sm logout-btn">Log Out</button>
+        <div class="user-pill-badge" id="header-user-badge">
+          <div class="upb-avatar" id="header-avatar">U</div>
+          <span class="upb-name" id="header-username">@user</span>
+        </div>
+        <button class="btn btn-outline btn-sm logout-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Log Out</span>
+        </button>
       </div>
     </header>
 
@@ -120,33 +156,62 @@
       <div class="desktop-grid-home">
         <header class="app-header">
           <div class="header-top">
-            <span class="header-greeting" id="greeting-text">Good morning</span>
-            <span class="header-badge">Credit Plug</span>
+            <div class="header-user-meta">
+              <div class="user-avatar-main" id="main-avatar">U</div>
+              <div class="user-text-meta">
+                <span class="header-greeting" id="greeting-text">Good morning</span>
+                <h3 class="header-user-handle" id="main-user-handle">@user</h3>
+              </div>
+            </div>
+            <span class="header-badge live-pulse">
+              <span class="pulse-dot"></span> Instant Airtime Live
+            </span>
           </div>
+
           <div class="balance-card">
-            <p class="balance-label">Total Balance</p>
+            <div class="balance-card-header">
+              <div class="balance-title-group">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                <span class="balance-label">Withdrawable Balance</span>
+              </div>
+              <span class="currency-tag">GHS (Ghana Cedi)</span>
+            </div>
+            
             <h2 class="balance-amount" id="home-balance">GHS 0.00</h2>
+            
+            <div class="balance-actions">
+              <button class="btn btn-emerald btn-sm header-action-btn" data-tab="withdraw">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+                <span>Withdraw Airtime</span>
+              </button>
+              <button class="btn btn-outline-light btn-sm header-action-btn" id="scroll-to-surveys">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                <span>Earn More</span>
+              </button>
+            </div>
           </div>
+
           <div class="desktop-quick-info">
             <div class="info-pill">
-              <span class="pill-dot"></span> Instant Airtime Payouts
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Instant Telco Delivery</span>
             </div>
-            <p class="info-text">Complete CPX Research surveys to accumulate GHS balance and withdraw directly to your MTN, Telecel, or AT phone number.</p>
+            <p class="info-text">Complete CPX Research surveys below to accumulate balance. Earnings are sent straight to your phone number as mobile airtime across MTN, Telecel, and AT networks.</p>
           </div>
         </header>
 
         <div class="section-block main-survey-block">
           <div class="section-header">
-            <h3>Earn from Surveys</h3>
+            <div class="sh-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <h3>Earn from Surveys</h3>
+            </div>
             <span class="section-tag">Powered by CPX Research</span>
           </div>
           <div class="survey-container" id="cpx-container">
             <div class="survey-placeholder" id="cpx-placeholder">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <path d="M9 9h6v6H9z"/>
-              </svg>
-              <p>Loading surveys…</p>
+              <div class="loader-spinner"></div>
+              <p>Loading available surveys…</p>
             </div>
             <!-- CPX Research iframe will be injected here by app.js -->
           </div>
@@ -157,33 +222,98 @@
     <!-- ─── WITHDRAW TAB ─── -->
     <section id="tab-withdraw" class="tab-content">
       <header class="app-header page-header-desktop">
-        <h2 class="page-title">Withdraw Airtime</h2>
-        <p class="page-desc">Convert your balance to instant mobile airtime across any Ghana network</p>
+        <div class="page-title-group">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M6 16h.01M10 16h.01M14 16h.01M18 16h.01"/></svg>
+          <h2 class="page-title">Withdraw Airtime</h2>
+        </div>
+        <p class="page-desc">Convert your accumulated balance to instant mobile airtime directly to your registered phone number</p>
       </header>
 
       <div class="desktop-grid-withdraw">
         <div class="section-block withdraw-card-block">
           <div class="withdraw-balance-row">
-            <span class="wb-label">Available Balance</span>
-            <span class="wb-amount" id="withdraw-balance">GHS 0.00</span>
+            <div class="wb-left">
+              <span class="wb-label">Available Balance</span>
+              <span class="wb-amount" id="withdraw-balance">GHS 0.00</span>
+            </div>
+            <div class="wb-icon-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
           </div>
 
           <form id="withdraw-form" class="withdraw-form">
+            <!-- Interactive Telco Network Selector -->
             <div class="form-group">
-              <label for="withdraw-network">Network Provider</label>
-              <select id="withdraw-network" class="form-control">
-                <option value="AUTO">Auto-Detect Network</option>
-                <option value="MTN">MTN Ghana</option>
-                <option value="TELECEL">Telecel Ghana</option>
-                <option value="AT">AT (AirtelTigo)</option>
-              </select>
+              <label class="telco-group-label">
+                <span>Select Mobile Network Provider</span>
+              </label>
+              
+              <div class="telco-grid" id="telco-selector">
+                <!-- MTN Ghana -->
+                <div class="telco-card active" data-network="MTN">
+                  <div class="telco-logo-badge mtn-badge">
+                    <span class="telco-name-bold">MTN</span>
+                  </div>
+                  <div class="telco-info">
+                    <span class="telco-title">MTN Ghana</span>
+                    <span class="telco-sub">MTN MoMo / Airtime</span>
+                  </div>
+                  <div class="telco-radio-dot"></div>
+                </div>
+
+                <!-- Telecel Ghana (Vodafone) -->
+                <div class="telco-card" data-network="TELECEL">
+                  <div class="telco-logo-badge telecel-badge">
+                    <span class="telco-name-bold">telecel</span>
+                  </div>
+                  <div class="telco-info">
+                    <span class="telco-title">Telecel Ghana</span>
+                    <span class="telco-sub">Formerly Vodafone</span>
+                  </div>
+                  <div class="telco-radio-dot"></div>
+                </div>
+
+                <!-- AT (AirtelTigo) -->
+                <div class="telco-card" data-network="AT">
+                  <div class="telco-logo-badge at-badge">
+                    <span class="telco-name-bold">AT</span>
+                  </div>
+                  <div class="telco-info">
+                    <span class="telco-title">AT Ghana</span>
+                    <span class="telco-sub">AirtelTigo Network</span>
+                  </div>
+                  <div class="telco-radio-dot"></div>
+                </div>
+
+                <!-- Auto-Detect -->
+                <div class="telco-card" data-network="AUTO">
+                  <div class="telco-logo-badge auto-badge">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                  </div>
+                  <div class="telco-info">
+                    <span class="telco-title">Auto-Detect</span>
+                    <span class="telco-sub">Smart Network Route</span>
+                  </div>
+                  <div class="telco-radio-dot"></div>
+                </div>
+              </div>
+
+              <!-- Hidden input to hold current selected network -->
+              <input type="hidden" id="withdraw-network" value="MTN" />
             </div>
+
             <div class="form-group">
-              <label for="withdraw-amount">Amount (GHS)</label>
+              <label for="withdraw-amount">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                Withdrawal Amount (GHS)
+              </label>
               <input type="number" id="withdraw-amount" placeholder="Min. 3.00" min="3" step="0.01" required />
+              <span class="field-hint">Minimum payout threshold is GHS 3.00. Zero transaction fees.</span>
             </div>
-            <button type="submit" class="btn btn-primary btn-full" id="withdraw-btn">
-              Withdraw via Airtime
+
+            <button type="submit" class="btn btn-emerald btn-full" id="withdraw-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Withdraw Instant Airtime</span>
             </button>
             <div id="withdraw-error" class="form-error" role="alert"></div>
             <div id="withdraw-success" class="form-success hidden" role="status"></div>
@@ -192,7 +322,10 @@
 
         <div class="section-block tx-card-block">
           <div class="section-header">
-            <h3>Transaction History</h3>
+            <div class="sh-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <h3>Transaction History</h3>
+            </div>
           </div>
           <div id="tx-list" class="tx-list">
             <div class="tx-empty" id="tx-empty">
@@ -201,7 +334,6 @@
                 <polyline points="14 2 14 8 20 8"/>
                 <line x1="16" y1="13" x2="8" y2="13"/>
                 <line x1="16" y1="17" x2="8" y2="17"/>
-                <polyline points="10 9 9 9 8 9"/>
               </svg>
               <p>No transactions yet</p>
             </div>
@@ -214,8 +346,11 @@
     <!-- ─── PROFILE TAB ─── -->
     <section id="tab-profile" class="tab-content">
       <header class="app-header page-header-desktop">
-        <h2 class="page-title">Profile & Preferences</h2>
-        <p class="page-desc">Manage your account details and view overall activity</p>
+        <div class="page-title-group">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <h2 class="page-title">Profile & Security Settings</h2>
+        </div>
+        <p class="page-desc">Manage your account username and password. Phone numbers are locked for security.</p>
       </header>
 
       <div class="desktop-profile-wrapper">
@@ -223,30 +358,104 @@
           <div class="profile-info-card">
             <div class="profile-avatar" id="profile-avatar">U</div>
             <div class="profile-details">
+              <div class="profile-name-row">
+                <h3 class="profile-username-display" id="profile-username-display">@username</h3>
+                <span class="verified-badge">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Verified User
+                </span>
+              </div>
               <span class="profile-email" id="profile-email">—</span>
-              <span class="profile-phone" id="profile-phone">—</span>
+              <span class="profile-phone-badge" id="profile-phone-display">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span id="profile-phone-text">—</span>
+              </span>
             </div>
           </div>
         </div>
 
+        <!-- Profile Update Form -->
         <div class="section-block">
           <div class="section-header">
-            <h3>Account Statistics</h3>
+            <div class="sh-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              <h3>Update Account Details</h3>
+            </div>
+          </div>
+
+          <form id="profile-update-form" class="profile-update-form">
+            <div class="form-group">
+              <label for="update-username">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Username
+              </label>
+              <input type="text" id="update-username" placeholder="Your username" required />
+            </div>
+
+            <!-- Phone Number Field (DISABLED / LOCKED) -->
+            <div class="form-group">
+              <label for="update-phone" class="locked-label">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Phone Number (Immutable)
+                <span class="locked-tag">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  Locked
+                </span>
+              </label>
+              <input type="tel" id="update-phone" disabled class="input-disabled" title="Phone number cannot be changed" />
+              <span class="field-hint text-warning">Each phone number is uniquely bound to one account and cannot be modified.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="update-password">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                New Password (Optional)
+              </label>
+              <input type="password" id="update-password" placeholder="Leave blank to keep current password" minlength="8" autocomplete="new-password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="save-profile-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              <span>Save Profile Changes</span>
+            </button>
+            <div id="profile-error" class="form-error" role="alert"></div>
+            <div id="profile-success" class="form-success hidden" role="status"></div>
+          </form>
+        </div>
+
+        <div class="section-block">
+          <div class="section-header">
+            <div class="sh-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <h3>Account Statistics</h3>
+            </div>
           </div>
           <div class="stats-grid">
             <div class="stat-card">
+              <div class="stat-icon-wrap emerald">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              </div>
               <span class="stat-label">Total Earned</span>
               <span class="stat-value" id="stat-earned">GHS 0.00</span>
             </div>
             <div class="stat-card">
+              <div class="stat-icon-wrap slate">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
               <span class="stat-label">Total Withdrawn</span>
               <span class="stat-value" id="stat-withdrawn">GHS 0.00</span>
             </div>
             <div class="stat-card">
+              <div class="stat-icon-wrap emerald">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+              </div>
               <span class="stat-label">Current Balance</span>
               <span class="stat-value" id="stat-balance">GHS 0.00</span>
             </div>
             <div class="stat-card">
+              <div class="stat-icon-wrap blue">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
               <span class="stat-label">Surveys Done</span>
               <span class="stat-value" id="stat-surveys">0</span>
             </div>
@@ -254,7 +463,10 @@
         </div>
 
         <div class="section-block logout-block-desktop">
-          <button class="btn btn-outline btn-full logout-btn" id="logout-btn">Log Out</button>
+          <button class="btn btn-outline btn-full logout-btn" id="logout-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Log Out Account</span>
+          </button>
         </div>
       </div>
     </section>
