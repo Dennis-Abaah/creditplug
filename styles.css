@@ -712,6 +712,69 @@ input, button { font-family: inherit; }
   box-shadow: inset 0 0 0 3px var(--white);
 }
 
+/* Phone Choice Grid */
+.phone-choice-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.phone-choice-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.phone-choice-card:hover {
+  border-color: var(--slate-400);
+  background: var(--slate-50);
+}
+
+.phone-choice-card.active {
+  border-color: var(--emerald-600);
+  background: #F0FDF4;
+  box-shadow: 0 0 0 1px var(--emerald-600);
+}
+
+.pc-radio-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid var(--slate-300);
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.phone-choice-card.active .pc-radio-dot {
+  border-color: var(--emerald-600);
+  background: var(--emerald-600);
+  box-shadow: inset 0 0 0 3px var(--white);
+}
+
+.pc-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--slate-900);
+}
+
+.pc-sub {
+  font-size: 0.75rem;
+  color: var(--slate-500);
+}
+
 .withdraw-form {
   margin-bottom: 8px;
 }

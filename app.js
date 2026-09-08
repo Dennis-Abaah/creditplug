@@ -444,7 +444,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (updateUsernameInput) updateUsernameInput.value = rawUsername.replace(/^@/, '');
     if (updatePhoneInput) updatePhoneInput.value = userProfile?.phone_number || '—';
+
+    // Update Withdrawal Tab phone fields
+    const registeredPhoneDisplay = $('#registered-phone-display');
+    const withdrawPhoneInput = $('#withdraw-phone');
+    const registeredChoiceCard = $('#choice-registered');
+
+    if (registeredPhoneDisplay) registeredPhoneDisplay.textContent = userProfile?.phone_number || 'Registered Phone';
+    
+    // Default to registered phone if choice is active
+    if (registeredChoiceCard && registeredChoiceCard.classList.contains('active') && withdrawPhoneInput) {
+      withdrawPhoneInput.value = userProfile?.phone_number || '';
+      withdrawPhoneInput.readOnly = true;
+      withdrawPhoneInput.classList.add('input-disabled');
+    }
   }
+
+
+  /* ═══════════════════════════════════════════════
+     RECIPIENT PHONE CHOICE SELECTOR
+     ═══════════════════════════════════════════════ */
+
+  const phoneChoiceCards = $$('.phone-choice-card');
+  const withdrawPhoneInput = $('#withdraw-phone');
+
+  phoneChoiceCards.forEach(card => {
+    card.addEventListener('click', () => {
+      phoneChoiceCards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      const mode = card.dataset.mode;
+      
+      if (mode === 'registered') {
+        if (withdrawPhoneInput) {
+          withdrawPhoneInput.value = userProfile?.phone_number || '';
+          withdrawPhoneInput.readOnly = true;
+          withdrawPhoneInput.classList.add('input-disabled');
+        }
+      } else if (mode === 'custom') {
+        if (withdrawPhoneInput) {
+          withdrawPhoneInput.value = '';
+          withdrawPhoneInput.readOnly = false;
+          withdrawPhoneInput.classList.remove('input-disabled');
+          withdrawPhoneInput.focus();
+        }
+      }
+    });
+  });
 
 
   /* ── Profile Update Form Listener ── */
@@ -643,6 +688,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const amount = parseFloat(amountInput.value);
       const networkSelect = $('#withdraw-network');
       const network = networkSelect ? networkSelect.value : 'AUTO';
+      const phoneInput = $('#withdraw-phone');
+      const targetPhone = phoneInput ? phoneInput.value.trim() : '';
       const errEl  = $('#withdraw-error');
       const succEl = $('#withdraw-success');
       const btn    = $('#withdraw-btn');
@@ -652,6 +699,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (isNaN(amount) || amount < 3) {
         errEl.textContent = 'Minimum withdrawal is GHS 3.00.';
+        return;
+      }
+
+      if (!targetPhone || targetPhone.length < 9) {
+        errEl.textContent = 'Please specify a valid recipient mobile number.';
         return;
       }
 
@@ -665,7 +717,11 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        const payload = { amount };
+        const payload = {
+          amount,
+          phone: targetPhone
+        };
+
         if (network && network !== 'AUTO') {
           payload.network = network;
         }

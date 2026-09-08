@@ -87,7 +87,7 @@ serve(async (req: Request) => {
   }
 
   // ── Parse request body ──
-  let body: { amount?: number; network?: "MTN" | "TELECEL" | "AT" };
+  let body: { amount?: number; network?: "MTN" | "TELECEL" | "AT"; phone?: string };
   try {
     body = await req.json();
   } catch {
@@ -119,15 +119,20 @@ serve(async (req: Request) => {
     return jsonResponse({ error: "Insufficient balance" }, 400);
   }
 
-  if (!profile.phone_number) {
-    return jsonResponse({ error: "No phone number on file" }, 400);
+  // Determine recipient phone (custom or registered)
+  const recipientPhone = body.phone && body.phone.trim().length >= 9
+    ? body.phone.trim()
+    : profile.phone_number;
+
+  if (!recipientPhone) {
+    return jsonResponse({ error: "No recipient phone number specified" }, 400);
   }
 
   // Determine network and phone format
-  const formattedPhone = formatPhoneLocal(profile.phone_number);
+  const formattedPhone = formatPhoneLocal(recipientPhone);
   const selectedNetwork = body.network && ["MTN", "TELECEL", "AT"].includes(body.network)
     ? body.network
-    : detectNetwork(profile.phone_number);
+    : detectNetwork(recipientPhone);
 
   // ── Deduct balance atomically ──
   const { error: deductErr } = await supabaseAdmin.rpc("adjust_balance", {
