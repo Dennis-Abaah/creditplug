@@ -7,6 +7,7 @@
 const SUPABASE_URL  = 'https://ckegiefkzusqbpkyqkru.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrZWdpZWZrenVzcWJwa3lxa3J1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4NDMzOTUsImV4cCI6MjEwNDQxOTM5NX0.wOwZN1rZ61-gILpVgXEzEF37nkggI19wpsYeZdqPgyo';
 const CPX_APP_ID    = '36008';
+const TIMEWALL_PUB_ID = '123fce9f30872777'; // Replace with your TimeWall Publisher ID
 
 // ── Supabase Client ────────────────────────────
 let supabaseClient;
@@ -337,6 +338,8 @@ document.addEventListener('DOMContentLoaded', () => {
       loadTransactions();
     } else if (tab === 'profile') {
       loadProfileStats();
+    } else if (tab === 'tasks') {
+      loadTimeWallOffers();
     }
   }
 
@@ -620,6 +623,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ═══════════════════════════════════════════════
+     TIMEWALL OFFERWALL (TASKS)
+     ═══════════════════════════════════════════════ */
+
+  function loadTimeWallOffers(forceReload = false) {
+    if (!currentUser) return;
+
+    const container = $('#timewall-container');
+    const placeholder = $('#timewall-placeholder');
+    if (!container) return;
+
+    // If force reload, remove existing iframe
+    if (forceReload) {
+      const existingIframe = container.querySelector('iframe');
+      if (existingIframe) existingIframe.remove();
+      if (placeholder) placeholder.classList.remove('hidden');
+    }
+
+    // Prevent duplicate iframes
+    if (container.querySelector('iframe')) return;
+
+    // Build TimeWall embed URL with user's UUID as subid
+    const timewallUrl = `https://timewall.io/wall?pub_id=${TIMEWALL_PUB_ID}&subid=${currentUser.id}`;
+
+    // Create iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = timewallUrl;
+    iframe.title = 'TimeWall Tasks & Offers';
+    iframe.setAttribute('loading', 'lazy');
+    iframe.setAttribute('allow', 'clipboard-write');
+    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation');
+
+    iframe.addEventListener('load', () => {
+      if (placeholder) placeholder.classList.add('hidden');
+    });
+
+    container.appendChild(iframe);
+  }
+
+  // Reload Tasks button handler
+  const reloadTasksBtn = $('#reload-tasks-btn');
+  if (reloadTasksBtn) {
+    reloadTasksBtn.addEventListener('click', () => {
+      loadTimeWallOffers(true);
+      showToast('Refreshing tasks…');
+    });
+  }
+
+
+  /* ═══════════════════════════════════════════════
      TRANSACTIONS
      ═══════════════════════════════════════════════ */
 
@@ -652,9 +704,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = document.createElement('div');
         item.className = 'tx-item';
 
-        const typeLabel = tx.type === 'survey_credit' ? 'Survey Credit' : 'Withdrawal';
-        const amountClass = tx.type === 'survey_credit' ? 'credit' : 'debit';
-        const prefix = tx.type === 'survey_credit' ? '+' : '−';
+        const typeLabel = tx.type === 'survey_credit' ? 'Survey Credit' : tx.type === 'task_credit' ? 'Task Credit' : 'Withdrawal';
+        const amountClass = (tx.type === 'survey_credit' || tx.type === 'task_credit') ? 'credit' : 'debit';
+        const prefix = (tx.type === 'survey_credit' || tx.type === 'task_credit') ? '+' : '−';
 
         item.innerHTML = `
           <div class="tx-left">

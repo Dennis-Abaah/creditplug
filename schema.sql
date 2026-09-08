@@ -48,11 +48,15 @@ CREATE TABLE IF NOT EXISTS public.transactions (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id     UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
   amount      NUMERIC(12, 2) NOT NULL,
-  type        TEXT NOT NULL CHECK (type IN ('survey_credit', 'withdrawal')),
+  type        TEXT NOT NULL CHECK (type IN ('survey_credit', 'withdrawal', 'task_credit')),
   status      TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'success', 'failed')),
-  reference   TEXT,          -- external ref (e.g. TechLink orderId, CPX trans_id)
+  reference   TEXT,          -- external ref (e.g. TechLink orderId, CPX trans_id, TimeWall trans_id)
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- Migration for existing environments:
+ALTER TABLE public.transactions DROP CONSTRAINT IF EXISTS transactions_type_check;
+ALTER TABLE public.transactions ADD CONSTRAINT transactions_type_check CHECK (type IN ('survey_credit', 'withdrawal', 'task_credit'));
 
 -- Indexes for common queries
 CREATE INDEX IF NOT EXISTS idx_transactions_user_id   ON public.transactions(user_id);
