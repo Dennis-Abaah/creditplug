@@ -561,17 +561,26 @@ input, button { font-family: inherit; }
 .tasks-hub-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 16px;
+  gap: 18px;
+  margin-top: 14px;
+  padding: 0 16px;
+}
+
+@media (min-width: 769px) {
+  .tasks-hub-container {
+    padding: 0;
+    gap: 20px;
+  }
 }
 
 /* Hero Launch Card */
 .tasks-hero-card {
-  background: linear-gradient(135deg, #064E3B 0%, #047857 55%, #059669 100%);
+  background: linear-gradient(135deg, #064E3B 0%, #065F46 45%, #047857 100%);
   color: #FFFFFF;
-  border-radius: 18px;
-  padding: 30px 32px;
-  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.25);
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 10px 25px -5px rgba(6, 78, 59, 0.35);
+  border: 1px solid rgba(52, 211, 153, 0.25);
   position: relative;
   overflow: hidden;
 }
@@ -583,7 +592,7 @@ input, button { font-family: inherit; }
   right: -40px;
   width: 180px;
   height: 180px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.14) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -591,10 +600,10 @@ input, button { font-family: inherit; }
 .thc-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(8px);
-  padding: 6px 14px;
+  padding: 5px 12px;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
@@ -603,38 +612,39 @@ input, button { font-family: inherit; }
 }
 
 .thc-title {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 800;
-  margin: 14px 0 8px;
+  margin: 12px 0 6px;
   color: #FFFFFF;
   letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 .thc-desc {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   color: #D1FAE5;
-  line-height: 1.55;
-  max-width: 640px;
-  margin-bottom: 24px;
+  line-height: 1.5;
+  max-width: 620px;
+  margin-bottom: 18px;
 }
 
 .thc-cta-box {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
 .thc-launch-btn {
   background: #FFFFFF !important;
-  color: #065F46 !important;
+  color: #064E3B !important;
   font-weight: 700;
-  font-size: 1rem;
-  padding: 14px 26px;
-  border-radius: 12px;
+  font-size: 0.9375rem;
+  padding: 11px 22px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
@@ -642,8 +652,8 @@ input, button { font-family: inherit; }
 }
 
 .thc-launch-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
   background: #F0FDF4 !important;
 }
 
@@ -651,10 +661,10 @@ input, button { font-family: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.8125rem;
+  font-size: 0.78125rem;
   color: #A7F3D0;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 8px 14px;
+  background: rgba(0, 0, 0, 0.22);
+  padding: 7px 12px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -667,27 +677,27 @@ input, button { font-family: inherit; }
 .tasks-steps-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  gap: 12px;
 }
 
 .task-step-card {
   background: var(--white);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px 18px;
+  border-radius: 12px;
+  padding: 12px 14px;
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  gap: 10px;
 }
 
 .tsc-number {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: var(--emerald-50);
   color: var(--emerald-600);
   font-weight: 800;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -696,16 +706,16 @@ input, button { font-family: inherit; }
 }
 
 .tsc-info h4 {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 700;
-  margin: 0 0 4px;
+  margin: 0 0 2px;
   color: var(--slate-800);
 }
 
 .tsc-info p {
-  font-size: 0.75rem;
+  font-size: 0.71875rem;
   color: var(--slate-500);
-  line-height: 1.45;
+  line-height: 1.35;
   margin: 0;
 }
 
@@ -717,27 +727,155 @@ input, button { font-family: inherit; }
 }
 
 .task-cat-card {
-  background: var(--white);
-  border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 18px 20px;
+  padding: 16px 18px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
+  overflow: hidden;
+  user-select: none;
+  text-align: left;
 }
 
-.task-cat-card:hover {
-  border-color: var(--emerald-400);
+.task-cat-card:active {
+  transform: scale(0.985);
+}
+
+/* Theme: App Downloads */
+.task-cat-card.cat-apps {
+  background: linear-gradient(135deg, #ECFDF5 0%, #FFFFFF 52%, #F0FDF4 100%);
+  border: 1px solid #A7F3D0;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.07), 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.task-cat-card.cat-apps:hover {
+  border-color: #10B981;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.08);
+  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.18);
 }
 
+.tcc-icon.app-icon {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  border: none;
+}
+
+.cat-apps .tcc-action-badge {
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+}
+
+.cat-apps:hover .tcc-action-badge {
+  background: #059669;
+  color: #FFFFFF;
+  border-color: #059669;
+}
+
+/* Theme: Short Clicks */
+.task-cat-card.cat-clicks {
+  background: linear-gradient(135deg, #EFF6FF 0%, #FFFFFF 52%, #F0F9FF 100%);
+  border: 1px solid #BFDBFE;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.07), 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.task-cat-card.cat-clicks:hover {
+  border-color: #3B82F6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(59, 130, 246, 0.18);
+}
+
+.tcc-icon.click-icon {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  border: none;
+}
+
+.cat-clicks .tcc-action-badge {
+  background: #EFF6FF;
+  color: #2563EB;
+  border: 1px solid #BFDBFE;
+}
+
+.cat-clicks:hover .tcc-action-badge {
+  background: #2563EB;
+  color: #FFFFFF;
+  border-color: #2563EB;
+}
+
+/* Theme: Surveys */
+.task-cat-card.cat-surveys {
+  background: linear-gradient(135deg, #FAF5FF 0%, #FFFFFF 52%, #F5F3FF 100%);
+  border: 1px solid #DDD6FE;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.07), 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.task-cat-card.cat-surveys:hover {
+  border-color: #8B5CF6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(139, 92, 246, 0.18);
+}
+
+.tcc-icon.survey-icon {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  border: none;
+}
+
+.cat-surveys .tcc-action-badge {
+  background: #F5F3FF;
+  color: #7C3AED;
+  border: 1px solid #DDD6FE;
+}
+
+.cat-surveys:hover .tcc-action-badge {
+  background: #7C3AED;
+  color: #FFFFFF;
+  border-color: #7C3AED;
+}
+
+/* Theme: Games & Signups */
+.task-cat-card.cat-games {
+  background: linear-gradient(135deg, #FFF1F2 0%, #FFFFFF 52%, #FDF2F8 100%);
+  border: 1px solid #FECDD3;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.07), 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.task-cat-card.cat-games:hover {
+  border-color: #F43F5E;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(244, 63, 94, 0.18);
+}
+
+.tcc-icon.game-icon {
+  background: linear-gradient(135deg, #F43F5E 0%, #BE123C 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+  border: none;
+}
+
+.cat-games .tcc-action-badge {
+  background: #FFF1F2;
+  color: #E11D48;
+  border: 1px solid #FECDD3;
+}
+
+.cat-games:hover .tcc-action-badge {
+  background: #E11D48;
+  color: #FFFFFF;
+  border-color: #E11D48;
+}
+
+/* Card Elements */
 .tcc-icon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -745,106 +883,95 @@ input, button { font-family: inherit; }
   flex-shrink: 0;
 }
 
-.tcc-icon.app-icon {
-  background: #ECFDF5;
-  border: 1px solid #A7F3D0;
-}
-
-.tcc-icon.click-icon {
-  background: #EFF6FF;
-  border: 1px solid #BFDBFE;
-}
-
-.tcc-icon.survey-icon {
-  background: #F5F3FF;
-  border: 1px solid #DDD6FE;
-}
-
-.tcc-icon.game-icon {
-  background: #FDF2F8;
-  border: 1px solid #FBCFE8;
-}
-
 .tcc-content {
   flex: 1;
+  min-width: 0;
 }
 
 .tcc-top {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
+  flex-wrap: wrap;
 }
 
 .tcc-top h4 {
-  font-size: 0.9375rem;
+  font-size: 0.90625rem;
   font-weight: 700;
   margin: 0;
-  color: var(--slate-800);
+  color: var(--slate-900);
 }
 
 .tcc-tag {
-  font-size: 0.6875rem;
+  font-size: 0.65625rem;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 2px 7px;
   border-radius: 6px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
 
 .tcc-tag.high {
-  background: #ECFDF5;
-  color: #059669;
-  border: 1px solid #A7F3D0;
+  background: #D1FAE5;
+  color: #065F46;
+  border: 1px solid #6EE7B7;
 }
 
 .tcc-tag.fast {
-  background: #EFF6FF;
-  color: #2563EB;
-  border: 1px solid #BFDBFE;
+  background: #DBEAFE;
+  color: #1E40AF;
+  border: 1px solid #93C5FD;
 }
 
 .tcc-tag.daily {
-  background: #F5F3FF;
-  color: #7C3AED;
-  border: 1px solid #DDD6FE;
+  background: #EDE9FE;
+  color: #5B21B6;
+  border: 1px solid #C4B5FD;
 }
 
 .tcc-tag.bonus {
-  background: #FDF2F8;
-  color: #DB2777;
-  border: 1px solid #FBCFE8;
+  background: #FFE4E6;
+  color: #9F1239;
+  border: 1px solid #FDA4AF;
 }
 
 .tcc-content p {
-  font-size: 0.8125rem;
+  font-size: 0.78125rem;
   color: var(--slate-500);
   line-height: 1.4;
   margin: 0;
 }
 
-.tcc-arrow {
-  color: var(--slate-400);
-  margin-left: auto;
-  transition: transform 0.2s ease, color 0.2s ease;
+.tcc-action-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 11px;
+  border-radius: 100px;
+  font-size: 0.71875rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
-.task-cat-card:hover .tcc-arrow {
-  transform: translateX(4px);
-  color: var(--emerald-600);
+.task-cat-card:hover .tcc-action-badge svg {
+  transform: translateX(2px);
+  transition: transform 0.2s ease;
 }
 
 /* Guarantee Card */
 .tasks-guarantee-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: linear-gradient(135deg, #F8FAFC 0%, #F0FDF4 100%);
+  border: 1px solid #A7F3D0;
   border-radius: 14px;
-  padding: 18px 22px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.05);
 }
 
 .tgc-left {
@@ -855,8 +982,8 @@ input, button { font-family: inherit; }
 }
 
 .tgc-shield {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
   background: var(--emerald-50);
   border: 1px solid #A7F3D0;
@@ -867,39 +994,188 @@ input, button { font-family: inherit; }
 }
 
 .tgc-text h5 {
-  font-size: 0.875rem;
+  font-size: 0.84375rem;
   font-weight: 700;
-  margin: 0 0 3px;
+  margin: 0 0 2px;
   color: var(--slate-800);
 }
 
 .tgc-text p {
-  font-size: 0.78125rem;
+  font-size: 0.75rem;
   color: var(--slate-500);
-  line-height: 1.45;
+  line-height: 1.4;
   margin: 0;
 }
 
+#refresh-tasks-balance-btn {
+  background: var(--white);
+  border-color: #A7F3D0;
+  color: #065F46;
+  font-weight: 600;
+}
+
+#refresh-tasks-balance-btn:hover {
+  background: #ECFDF5;
+  border-color: #10B981;
+  color: #047857;
+}
+
+/* Mobile Responsiveness for Tasks Tab */
 @media (max-width: 768px) {
-  .tasks-steps-row {
-    grid-template-columns: 1fr;
+  .tasks-hub-container {
+    padding: 0 16px;
+    gap: 13px;
+    margin-top: 10px;
   }
+
+  /* Compact Hero Card on Mobile */
+  .tasks-hero-card {
+    padding: 16px 16px;
+    border-radius: 14px;
+  }
+
+  .thc-badge {
+    font-size: 0.6875rem;
+    padding: 3px 9px;
+    gap: 5px;
+  }
+
+  .thc-title {
+    font-size: 1.0625rem;
+    margin: 8px 0 4px;
+    line-height: 1.25;
+  }
+
+  .thc-desc {
+    font-size: 0.78125rem;
+    margin-bottom: 12px;
+    line-height: 1.38;
+    max-width: 100%;
+  }
+
+  .thc-cta-box {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .thc-launch-btn {
+    width: 100%;
+    height: 42px;
+    font-size: 0.875rem;
+    padding: 0 16px;
+    justify-content: center;
+  }
+
+  .thc-tracking-pill {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.71875rem;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.25);
+  }
+
+  /* Compact 3-Step Horizontal Row on Mobile */
+  .tasks-steps-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .task-step-card {
+    padding: 8px 6px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    border-radius: 10px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+  }
+
+  .tsc-number {
+    width: 22px;
+    height: 22px;
+    font-size: 0.6875rem;
+  }
+
+  .tsc-info h4 {
+    font-size: 0.6875rem;
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
+    color: var(--slate-800);
+  }
+
+  .tsc-info p {
+    display: none; /* Keep mobile clean and compact */
+  }
+
+  /* Stacked Vibrant Category Cards on Mobile */
   .tasks-category-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
-  .tasks-hero-card {
-    padding: 22px 20px;
+
+  .task-cat-card {
+    padding: 12px 14px;
+    gap: 12px;
+    border-radius: 12px;
   }
-  .thc-title {
-    font-size: 1.25rem;
+
+  .tcc-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
   }
+
+  .tcc-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .tcc-top h4 {
+    font-size: 0.875rem;
+  }
+
+  .tcc-content p {
+    font-size: 0.75rem;
+    line-height: 1.32;
+  }
+
+  .tcc-action-badge {
+    padding: 4px 9px;
+    font-size: 0.6875rem;
+  }
+
+  /* Guarantee Card on Mobile */
   .tasks-guarantee-card {
     flex-direction: column;
     align-items: stretch;
+    padding: 14px;
+    gap: 12px;
   }
+
+  .tgc-left {
+    gap: 10px;
+  }
+
+  .tgc-shield {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .tgc-shield svg {
+    width: 18px;
+    height: 18px;
+  }
+
   .tasks-guarantee-card button {
     width: 100%;
     justify-content: center;
+    height: 38px;
   }
 }
 
