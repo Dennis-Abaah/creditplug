@@ -1,703 +1,914 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Credit Plug — Earn money completing surveys and withdraw as mobile airtime." />
-  <title>Credit Plug</title>
-  <link rel="icon" href="favicon.png" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Plug Ghana 🔌 | Earn Instant Airtime & Mobile Rewards</title>
+    <meta name="description" content="The ultimate Ghana airtime plug! Complete micro-tasks, surveys, and app tests to get instant MTN, Telecel, and AT Ghana airtime top-ups directly to your phone.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Canvas Confetti for celebratory cashout interactions -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        plug: {
+                            50: '#e6f8f1',
+                            100: '#c3eedd',
+                            400: '#10b981',
+                            500: '#00a86b', // Authentic Emerald Green from screenshot
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b',
+                            navy: '#0D192B', // Dark Navy from hero card screenshot
+                        },
+                        mtn: '#FFCC00',
+                        telecel: '#E2001A',
+                        atghana: '#003399'
+                    },
+                    boxShadow: {
+                        'glow': '0 0 25px -5px rgba(0, 168, 107, 0.3)',
+                        'card': '0 10px 30px -5px rgba(13, 25, 43, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Keyframe Animations & Utilities */
+        @keyframes pulseSoft {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 0.95; }
+        }
+        .animate-pulse-soft {
+            animation: pulseSoft 3s infinite ease-in-out;
+        }
+
+        .ticker-wrap {
+            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+        }
+
+        /* Glassmorphism subtle overlay */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Network Select Radio Custom Styling */
+        .net-card input[type="radio"]:checked + .net-content {
+            border-color: #00a86b;
+            background-color: #f0fdf4;
+            box-shadow: 0 0 0 2px rgba(0, 168, 107, 0.2);
+        }
+    </style>
 </head>
-<body>
 
-  <!-- ══════════════════════════════════════════════
-       AUTH SCREENS
-  ══════════════════════════════════════════════ -->
-  <div id="auth-container" class="auth-container">
-    <div class="auth-card">
-      <div class="auth-brand">
-        <div class="auth-logo">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect width="32" height="32" rx="8" fill="#0F172A"/>
-            <path d="M8 16C8 11.582 11.582 8 16 8C18.55 8 20.826 9.168 22.328 11H19C18.448 11 18 11.448 18 12C18 12.552 18.448 13 19 13H24C24.552 13 25 12.552 25 12V7C25 6.448 24.552 6 24 6C23.448 6 23 6.448 23 7V9.528C21.14 7.384 18.428 6 15.5 6C10.253 6 6 10.253 6 15.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/>
-            <path d="M24 16C24 20.418 20.418 24 16 24C13.45 24 11.174 22.832 9.672 21H13C13.552 21 14 20.552 14 20C14 19.448 13.552 19 13 19H8C7.448 19 7 19.448 7 20V25C7 25.552 7.448 26 8 26C8.552 26 9 25.552 9 25V22.472C10.86 24.616 13.572 26 16.5 26C21.747 26 26 21.747 26 16.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h1 class="auth-title">Credit Plug</h1>
-        <p class="auth-subtitle">Earn from surveys. Withdraw as airtime.</p>
-      </div>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-plug-500 selection:text-white min-h-screen flex flex-col justify-between">
 
-      <!-- Login Form -->
-      <form id="login-form" class="auth-form" autocomplete="on">
-        <div class="form-group">
-          <label for="login-email">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Email address
-          </label>
-          <input type="email" id="login-email" placeholder="you@example.com" required autocomplete="email" />
-        </div>
-        <div class="form-group">
-          <label for="login-password">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Password
-          </label>
-          <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password" />
-        </div>
-        <button type="submit" class="btn btn-primary btn-full" id="login-btn">
-          <span>Sign In</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </button>
-        <p class="auth-switch">Don't have an account? <a href="#" id="show-signup">Create one</a></p>
-        <div id="login-error" class="form-error" role="alert"></div>
-      </form>
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="https://creditplug.vercel.app/app.html" class="flex items-center gap-2 text-xl font-black tracking-tight text-slate-900 group">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-plug-500 to-emerald-700 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-plug text-lg"></i>
+                </div>
+                <div class="flex flex-col leading-tight">
+                    <span class="text-slate-900 font-extrabold tracking-tight text-lg">Credit<span class="text-plug-500">Plug</span></span>
+                    <span class="text-[9px] font-bold tracking-widest text-emerald-600 uppercase">100% FREE REWARDS</span>
+                </div>
+            </a>
 
-      <!-- Sign Up Form -->
-      <form id="signup-form" class="auth-form hidden" autocomplete="on">
-        <div class="form-group">
-          <label for="signup-username">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            Username
-          </label>
-          <input type="text" id="signup-username" placeholder="e.g. kwame_plug" required autocomplete="username" />
-        </div>
-        <div class="form-group">
-          <label for="signup-email">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            Email address
-          </label>
-          <input type="email" id="signup-email" placeholder="you@example.com" required autocomplete="email" />
-        </div>
-        <div class="form-group">
-          <label for="signup-phone">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            Phone Number (To Recieve Airtime)
-          </label>
-          <input type="tel" id="signup-phone" placeholder="0241234567" required autocomplete="tel" />
-          <span class="field-hint">Phone number is strictly locked to your account upon creation.</span>
-        </div>
-        <div class="form-group">
-          <label for="signup-password">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Password
-          </label>
-          <input type="password" id="signup-password" placeholder="Min. 8 characters" required minlength="8" autocomplete="new-password" />
-        </div>
-        <button type="submit" class="btn btn-primary btn-full" id="signup-btn">
-          <span>Create Account</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </button>
-        <p class="auth-switch">Already have an account? <a href="#" id="show-login">Sign in</a></p>
-        <div id="signup-error" class="form-error" role="alert"></div>
-        <div id="signup-success" class="form-success hidden" role="status"></div>
-      </form>
-    </div>
-  </div>
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+                <a href="#how-it-works" class="hover:text-plug-500 transition-colors">How It Works</a>
+                <a href="#earning-hub" class="hover:text-plug-500 transition-colors">Tasks Hub</a>
+                <a href="#received-messages" class="hover:text-plug-500 transition-colors">Received Messages</a>
+                <a href="#reviews" class="hover:text-plug-500 transition-colors">Chale Reviews</a>
+                <a href="#faq" class="hover:text-plug-500 transition-colors">FAQ</a>
+            </nav>
 
-  <!-- ══════════════════════════════════════════════
-       MAIN APPLICATION
-  ══════════════════════════════════════════════ -->
-  <div id="app-container" class="app-container hidden">
+            <!-- CTA Buttons -->
+            <div class="hidden md:flex items-center gap-3">
+                <a href="https://creditplug.vercel.app/app.html" class="text-sm font-bold text-slate-700 hover:text-plug-600 px-4 py-2 transition-colors">
+                    Login @User
+                </a>
+                <a href="https://creditplug.vercel.app/app.html" class="text-sm font-extrabold bg-plug-500 hover:bg-plug-600 text-white px-5 py-2.5 rounded-xl shadow-md hover:shadow-glow transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-xs"></i>
+                    <span>Claim FREE Airtime</span>
+                </a>
+            </div>
 
-    <!-- Desktop Navigation Bar (Visible on Desktop) -->
-    <header class="desktop-nav">
-      <div class="desktop-nav-brand">
-        <div class="auth-logo">
-          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-            <rect width="32" height="32" rx="8" fill="#0F172A"/>
-            <path d="M8 16C8 11.582 11.582 8 16 8C18.55 8 20.826 9.168 22.328 11H19C18.448 11 18 11.448 18 12C18 12.552 18.448 13 19 13H24C24.552 13 25 12.552 25 12V7C25 6.448 23 6.448 23 7V9.528C21.14 7.384 18.428 6 15.5 6C10.253 6 6 10.253 6 15.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/>
-            <path d="M24 16C24 20.418 20.418 24 16 24C13.45 24 11.174 22.832 9.672 21H13C13.552 21 14 20.552 14 20C14 19.448 13.552 19 13 19H8C7.448 19 7 19.448 7 20V25C7 25.552 7.448 26 8 26C8.552 26 9 25.552 9 25V22.472C10.86 24.616 13.572 26 16.5 26C21.747 26 26 21.747 26 16.5" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-slate-700 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100 transition-colors" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
         </div>
-        <span class="desktop-brand-title">Credit Plug</span>
-      </div>
 
-      <nav class="desktop-menu">
-        <button class="nav-item active" data-tab="home">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
-          <span>Surveys & Earn</span>
-        </button>
-        <button class="nav-item" data-tab="tasks">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 11l3 3L22 4"/>
-            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-          </svg>
-          <span>Tasks</span>
-        </button>
-        <button class="nav-item" data-tab="withdraw">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="1" x2="12" y2="23"/>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-          </svg>
-          <span>Withdraw Airtime</span>
-        </button>
-        <button class="nav-item" data-tab="profile">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
-          <span>Profile</span>
-        </button>
-      </nav>
-
-      <div class="desktop-nav-right">
-        <div class="user-pill-badge" id="header-user-badge">
-          <div class="upb-avatar" id="header-avatar">U</div>
-          <span class="upb-name" id="header-username">@user</span>
+        <!-- Mobile Drawer Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 py-5 space-y-4 shadow-xl">
+            <a href="#how-it-works" class="block text-slate-700 font-semibold hover:text-plug-500" onclick="toggleMobileMenu()">How It Works</a>
+            <a href="#earning-hub" class="block text-slate-700 font-semibold hover:text-plug-500" onclick="toggleMobileMenu()">Tasks Hub</a>
+            <a href="#received-messages" class="block text-slate-700 font-semibold hover:text-plug-500" onclick="toggleMobileMenu()">Received Messages</a>
+            <a href="#reviews" class="block text-slate-700 font-semibold hover:text-plug-500" onclick="toggleMobileMenu()">Chale Reviews</a>
+            <a href="#faq" class="block text-slate-700 font-semibold hover:text-plug-500" onclick="toggleMobileMenu()">FAQ</a>
+            <div class="pt-2 border-t border-slate-100 flex flex-col gap-2">
+                <a href="https://creditplug.vercel.app/app.html" class="w-full text-center font-extrabold bg-plug-500 text-white py-3 rounded-xl shadow-md">
+                    Open FREE Credit Plug App 🔌
+                </a>
+            </div>
         </div>
-        <button class="btn btn-outline btn-sm logout-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          <span>Log Out</span>
-        </button>
-      </div>
     </header>
 
-    <!-- ─── HOME TAB ─── -->
-    <section id="tab-home" class="tab-content active">
-      <div class="desktop-grid-home">
-        <header class="app-header">
-          <div class="header-top">
-            <div class="header-user-meta">
-              <div class="user-avatar-main" id="main-avatar">U</div>
-              <div class="user-text-meta">
-                <span class="header-greeting" id="greeting-text">Good morning</span>
-                <h3 class="header-user-handle" id="main-user-handle">@user</h3>
-              </div>
-            </div>
-            <span class="header-badge live-pulse">
-              <span class="pulse-dot"></span> Instant Airtime Live
-            </span>
-          </div>
+    <!-- Hero Section -->
+    <section class="relative pt-10 pb-16 md:pt-16 md:pb-24 overflow-hidden bg-gradient-to-b from-emerald-50/60 via-slate-50 to-slate-50">
+        <!-- Ambient Decorative Glow -->
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-plug-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 left-10 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
 
-          <div class="balance-card">
-            <div class="balance-card-header">
-              <div class="balance-title-group">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-                <span class="balance-label">Withdrawable Balance</span>
-              </div>
-              <span class="currency-tag">Ghana Cedi</span>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                <!-- Hero Left Column Text -->
+                <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                    
+                    <!-- Ghanaian Vibe Tag -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-bold text-slate-700 shadow-sm">
+                        <span>🇬🇭 Ghana's #1 FREE Airtime Plug</span>
+                        <span class="text-slate-300">•</span>
+                        <span class="text-plug-600 font-extrabold">100% FREE FOREVER</span>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-none">
+                        Charlie, Plug Yourself to <span class="text-transparent bg-clip-text bg-gradient-to-r from-plug-500 via-emerald-600 to-teal-700">100% FREE Instant Airtime</span> Credit!
+                    </h1>
+
+                    <p class="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                        No long talk & no deposits! Complete quick micro-tasks, test trending apps, and answer simple surveys. Get FREE <strong class="text-slate-900">MTN, Telecel, or AT Ghana</strong> airtime directly to your phone!
+                    </p>
+
+                    <!-- Network Logos Bar -->
+                    <div class="pt-1 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-xs font-black">
+                        <span class="text-slate-400 font-semibold text-xs mr-1">Direct FREE Payouts To:</span>
+                        
+                        <span class="px-3 py-1.5 rounded-xl bg-mtn text-slate-950 shadow-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-bolt"></i> MTN Ghana
+                        </span>
+                        <span class="px-3 py-1.5 rounded-xl bg-telecel text-white shadow-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-signal"></i> Telecel
+                        </span>
+                        <span class="px-3 py-1.5 rounded-xl bg-atghana text-white shadow-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-wifi"></i> AT Ghana
+                        </span>
+                    </div>
+
+                    <!-- Call To Action Buttons -->
+                    <div class="pt-3 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
+                        <a href="https://creditplug.vercel.app/app.html" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-plug-500 hover:bg-plug-600 text-white font-black text-base shadow-lg shadow-plug-500/25 hover:shadow-glow transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-3">
+                            <span>Get FREE Airtime Now</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </a>
+                        <a href="https://creditplug.vercel.app/app.html" class="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-800 font-bold text-base border border-slate-200 shadow-sm transition-all text-center">
+                            Explore FREE Tasks Hub 📱
+                        </a>
+                    </div>
+
+                    <!-- Key Stats Bar -->
+                    <div class="pt-6 grid grid-cols-3 gap-3 border-t border-slate-200/80 max-w-md mx-auto lg:mx-0 text-center lg:text-left">
+                        <div>
+                            <div class="text-lg sm:text-2xl font-black text-slate-900">GH₵ 0.00</div>
+                            <div class="text-[11px] text-slate-500 font-medium">100% FREE Fee</div>
+                        </div>
+                        <div>
+                            <div class="text-lg sm:text-2xl font-black text-plug-600">⚡ Instant</div>
+                            <div class="text-[11px] text-slate-500 font-medium">Automatic SMS Delivery</div>
+                        </div>
+                        <div>
+                            <div class="text-lg sm:text-2xl font-black text-slate-900">100% FREE</div>
+                            <div class="text-[11px] text-slate-500 font-medium">No Money Required</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Hero Right Column: Replica of the App Screenshot UI -->
+                <div class="lg:col-span-5 relative">
+                    <!-- Phone Container Design Frame -->
+                    <div class="mx-auto max-w-sm bg-slate-900 p-3 rounded-[2.5rem] shadow-2xl ring-1 ring-slate-800/10">
+                        <div class="bg-white rounded-[2rem] p-4 overflow-hidden relative text-slate-800 space-y-4">
+                            
+                            <!-- Replica Top Bar -->
+                            <div class="flex items-center justify-between pb-1">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-full bg-plug-navy text-white font-bold flex items-center justify-center text-xs">
+                                        D
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] text-slate-400 font-medium">Good morning</div>
+                                        <div class="text-xs font-bold text-slate-900">@Dennis Abaah</div>
+                                    </div>
+                                </div>
+                                <div class="bg-emerald-50 border border-emerald-200/60 px-2.5 py-1 rounded-full text-[10px] font-extrabold text-plug-600 flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-plug-500 animate-ping"></span>
+                                    <span>FREE AIRTIME LIVE</span>
+                                </div>
+                            </div>
+
+                            <!-- Replica Dark Balance Card -->
+                            <div class="bg-plug-navy text-white rounded-2xl p-5 shadow-lg relative overflow-hidden space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2 text-xs font-semibold text-slate-300 tracking-wider">
+                                        <i class="fa-regular fa-credit-card text-emerald-400"></i>
+                                        <span>FREE BALANCE</span>
+                                    </div>
+                                    <span class="text-[10px] bg-slate-800 text-emerald-400 px-2.5 py-0.5 rounded-full font-bold">Ghana Cedi</span>
+                                </div>
+
+                                <div>
+                                    <div class="text-3xl font-black tracking-tight text-white">GHS 12.50</div>
+                                    <div class="text-[10px] text-slate-400 mt-0.5">Ready for instant mobile airtime cashout</div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-2 pt-1">
+                                    <a href="https://creditplug.vercel.app/app.html" class="py-2.5 rounded-xl bg-plug-500 hover:bg-plug-600 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow">
+                                        <i class="fa-solid fa-arrow-down-to-line text-[10px]"></i>
+                                        <span>Withdraw Airtime</span>
+                                    </a>
+                                    <a href="https://creditplug.vercel.app/app.html" class="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center gap-1">
+                                        <i class="fa-solid fa-circle-plus text-[10px] text-emerald-400"></i>
+                                        <span>Earn FREE</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Replica CPX Research Box -->
+                            <div class="bg-slate-50 rounded-2xl p-3 border border-slate-200/80 space-y-2">
+                                <div class="flex items-center justify-between text-xs">
+                                    <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                                        <i class="fa-regular fa-file-lines text-emerald-600"></i>
+                                        <span>Earn FREE Airtime</span>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 bg-white px-2 py-0.5 rounded-md border border-slate-200">CPX Surveys</span>
+                                </div>
+
+                                <div class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-3 rounded-xl flex items-center justify-between shadow-sm">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fa-solid fa-chart-pie text-lg"></i>
+                                        <span class="font-bold text-xs">Consumer Pulse Survey</span>
+                                    </div>
+                                    <span class="bg-white/20 text-white font-black text-xs px-2 py-0.5 rounded-lg">+GHS 3.50 FREE</span>
+                                </div>
+                            </div>
+
+                            <!-- Replica Network Provider Badges -->
+                            <div class="grid grid-cols-3 gap-1.5 text-center text-[10px] font-bold">
+                                <div class="p-2 bg-yellow-100 border border-yellow-300 rounded-xl text-yellow-900 flex flex-col items-center">
+                                    <span class="font-black">MTN</span>
+                                    <span class="text-[8px] opacity-80">FREE Airtime</span>
+                                </div>
+                                <div class="p-2 bg-red-100 border border-red-300 rounded-xl text-red-900 flex flex-col items-center">
+                                    <span class="font-black">Telecel</span>
+                                    <span class="text-[8px] opacity-80">FREE Ghana</span>
+                                </div>
+                                <div class="p-2 bg-blue-100 border border-blue-300 rounded-xl text-blue-900 flex flex-col items-center">
+                                    <span class="font-black">AT Ghana</span>
+                                    <span class="text-[8px] opacity-80">FREE AirtelTigo</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </div>
+    </section>
+
+    <!-- Live Ghanaian Cashouts Ticker Feed -->
+    <section class="bg-plug-navy py-4 border-y border-slate-800 text-white overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center gap-3">
+            <div class="flex items-center gap-2 text-xs font-black text-emerald-400 uppercase tracking-wider shrink-0 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700">
+                <span class="w-2 h-2 rounded-full bg-plug-400 animate-ping"></span>
+                <span>Live FREE Cashouts:</span>
+            </div>
+
+            <!-- Animated Ticker Items -->
+            <div class="w-full overflow-hidden ticker-wrap">
+                <div id="payout-ticker" class="flex items-center gap-4 text-xs text-slate-300 whitespace-nowrap transition-transform duration-500">
+                    <!-- Dynamically populated via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Airtime Received Messages Section (Replaced Simulator) -->
+    <section id="received-messages" class="py-16 md:py-24 bg-white">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-black uppercase tracking-widest text-plug-600 bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200">Real Proof • 100% FREE 🔌</span>
+                <h2 class="text-3xl font-black text-slate-900 mt-3">Airtime Received Messages</h2>
+                <p class="text-slate-600 text-sm mt-2">See recent real SMS top-up notifications received by users across MTN, Telecel, and AT Ghana lines!</p>
+            </div>
+
+            <!-- SMS Message Cards Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                
+                <!-- SMS Alert 1: MTN Ghana -->
+                <div class="bg-slate-900 text-white rounded-3xl p-5 border-2 border-yellow-400 shadow-xl relative overflow-hidden space-y-3">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                            <span class="text-xs font-black text-yellow-400 tracking-wider">MTN Top-Up Alert</span>
+                        </div>
+                        <span class="text-[10px] bg-yellow-400/20 text-yellow-300 px-2 py-0.5 rounded-full font-bold">100% FREE</span>
+                    </div>
+
+                    <div class="bg-slate-800/80 p-3.5 rounded-2xl text-xs font-mono text-slate-200 leading-relaxed border border-slate-700/60">
+                        "Y'ello! You have received <strong class="text-yellow-400 font-extrabold">GH₵ 10.00 FREE Airtime</strong> from CREDIT PLUG GH. New airtime balance: GH₵ 14.50. Transaction ID: CP-982011. Thank you!"
+                    </div>
+
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+                        <span class="flex items-center gap-1 text-emerald-400 font-bold">
+                            <i class="fa-solid fa-circle-check"></i> Delivered via API
+                        </span>
+                        <span>2 mins ago • Accra</span>
+                    </div>
+                </div>
+
+                <!-- SMS Alert 2: Telecel Ghana -->
+                <div class="bg-slate-900 text-white rounded-3xl p-5 border-2 border-red-500 shadow-xl relative overflow-hidden space-y-3">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                            <span class="text-xs font-black text-red-400 tracking-wider">Telecel Ghana SMS</span>
+                        </div>
+                        <span class="text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full font-bold">100% FREE</span>
+                    </div>
+
+                    <div class="bg-slate-800/80 p-3.5 rounded-2xl text-xs font-mono text-slate-200 leading-relaxed border border-slate-700/60">
+                        "Telecel Notice: Your account has been credited with <strong class="text-red-400 font-extrabold">GH₵ 5.00 FREE Airtime</strong> top-up from CREDIT PLUG. Bonus data offer activated!"
+                    </div>
+
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+                        <span class="flex items-center gap-1 text-emerald-400 font-bold">
+                            <i class="fa-solid fa-circle-check"></i> Delivered via API
+                        </span>
+                        <span>7 mins ago • Kumasi</span>
+                    </div>
+                </div>
+
+                <!-- SMS Alert 3: AT Ghana -->
+                <div class="bg-slate-900 text-white rounded-3xl p-5 border-2 border-blue-500 shadow-xl relative overflow-hidden space-y-3">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                            <span class="text-xs font-black text-blue-400 tracking-wider">AT Ghana Alert</span>
+                        </div>
+                        <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full font-bold">100% FREE</span>
+                    </div>
+
+                    <div class="bg-slate-800/80 p-3.5 rounded-2xl text-xs font-mono text-slate-200 leading-relaxed border border-slate-700/60">
+                        "Dear Customer, <strong class="text-blue-400 font-extrabold">GH₵ 15.00 FREE Airtime</strong> top-up from CREDIT PLUG was successful. Dial *124# to check balance."
+                    </div>
+
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+                        <span class="flex items-center gap-1 text-emerald-400 font-bold">
+                            <i class="fa-solid fa-circle-check"></i> Delivered via API
+                        </span>
+                        <span>14 mins ago • Cape Coast</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Call To Action Box below messages -->
+            <div class="mt-10 bg-gradient-to-r from-plug-900 to-plug-navy rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl border border-slate-800">
+                <div>
+                    <h3 class="text-xl font-black">Want to receive FREE airtime on your phone too?</h3>
+                    <p class="text-slate-300 text-xs mt-1">Join thousands of Ghanaian students & workers claiming daily top-ups.</p>
+                </div>
+                <a href="https://creditplug.vercel.app/app.html" class="shrink-0 px-7 py-3.5 rounded-xl bg-plug-500 hover:bg-plug-600 text-white font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-bolt text-yellow-300"></i>
+                    <span>Claim FREE Airtime Now</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 md:py-24 bg-slate-100/70 border-t border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-black uppercase tracking-widest text-plug-600 bg-white px-3.5 py-1.5 rounded-full border border-slate-200 shadow-sm">100% FREE & Fast</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Chale, How Credit Plug Works</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">No money required! Complete quick FREE tasks and receive airtime directly on your phone.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 relative">
+                
+                <!-- Step 1 -->
+                <div class="bg-white rounded-3xl p-7 border border-slate-200/80 shadow-card hover:border-plug-500 transition-all space-y-4 group">
+                    <div class="w-14 h-14 rounded-2xl bg-plug-50 border border-plug-200 text-plug-600 flex items-center justify-center text-2xl font-black group-hover:scale-110 transition-transform">
+                        1
+                    </div>
+                    <h3 class="text-xl font-extrabold text-slate-900">Sign Up FREE & Create Handle</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">
+                        Create your account in seconds for FREE and get your handle (e.g., <strong class="text-slate-800">@Dennis Abaah</strong>).
+                    </p>
+                    <a href="https://creditplug.vercel.app/app.html" class="pt-2 text-xs font-extrabold text-plug-600 flex items-center gap-1 hover:underline">
+                        <span>Sign up in 30s FREE</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-white rounded-3xl p-7 border border-slate-200/80 shadow-card hover:border-plug-500 transition-all space-y-4 group">
+                    <div class="w-14 h-14 rounded-2xl bg-plug-50 border border-plug-200 text-plug-600 flex items-center justify-center text-2xl font-black group-hover:scale-110 transition-transform">
+                        2
+                    </div>
+                    <h3 class="text-xl font-extrabold text-slate-900">Complete FREE Tasks</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">
+                        Pick tasks from <strong>TimeWall</strong>, answer <strong>CPX Research</strong> surveys, download fun apps, or view web sponsors.
+                    </p>
+                    <a href="https://creditplug.vercel.app/app.html" class="pt-2 text-xs font-extrabold text-plug-600 flex items-center gap-1 hover:underline">
+                        <span>Start FREE Tasks</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-white rounded-3xl p-7 border border-slate-200/80 shadow-card hover:border-plug-500 transition-all space-y-4 group">
+                    <div class="w-14 h-14 rounded-2xl bg-plug-50 border border-plug-200 text-plug-600 flex items-center justify-center text-2xl font-black group-hover:scale-110 transition-transform">
+                        3
+                    </div>
+                    <h3 class="text-xl font-extrabold text-slate-900">Instant FREE Cashout</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">
+                        Request FREE airtime to your line or send it to a family member's MTN, Telecel, or AT Ghana line with 0 fees.
+                    </p>
+                    <a href="https://creditplug.vercel.app/app.html" class="pt-2 text-xs font-extrabold text-plug-600 flex items-center gap-1 hover:underline">
+                        <span>Claim FREE Airtime</span>
+                        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Tasks & Offers Hub Section -->
+    <section id="earning-hub" class="py-16 md:py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <h2 class="balance-amount" id="home-balance">GHS 0.00</h2>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-plug-600 text-xs font-black uppercase tracking-wider mb-1">
+                        <i class="fa-solid fa-square-check"></i>
+                        <span>100% FREE Tasks & Offers Hub</span>
+                    </div>
+                    <h2 class="text-3xl font-black text-slate-900">Multiple Ways to Earn FREE Airtime Balance</h2>
+                    <p class="text-slate-600 text-sm mt-1">Complete micro-tasks, test apps, and view offers to earn instant airtime credit for FREE.</p>
+                </div>
+
+                <div class="shrink-0">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs border border-slate-200">
+                        <i class="fa-solid fa-shield-halved text-plug-500"></i> Auto-tracked to @User
+                    </span>
+                </div>
+            </div>
+
+            <!-- Featured Banner Card -->
+            <div class="bg-gradient-to-r from-plug-900 via-plug-700 to-emerald-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl mb-10 relative overflow-hidden">
+                <div class="relative z-10 space-y-4 max-w-2xl">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 font-bold text-xs">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span>TimeWall Partner Network • 100% FREE</span>
+                    </div>
+
+                    <h3 class="text-2xl sm:text-3xl font-black leading-snug">
+                        Earn FREE Airtime with Quick Tasks
+                    </h3>
+
+                    <p class="text-slate-200 text-xs sm:text-sm font-medium leading-relaxed">
+                        Test apps, click offers, and complete micro-surveys. Instant automatic credits directly to your airtime balance for FREE.
+                    </p>
+
+                    <div class="pt-2 flex flex-wrap items-center gap-4">
+                        <a href="https://creditplug.vercel.app/app.html" class="px-6 py-3 rounded-xl bg-white text-plug-900 font-black text-xs sm:text-sm hover:bg-slate-100 transition-all flex items-center gap-2 shadow-md">
+                            <i class="fa-solid fa-bolt text-plug-600"></i>
+                            <span>Launch FREE Tasks Portal</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                        <span class="text-xs text-emerald-200 font-bold flex items-center gap-1">
+                            <i class="fa-solid fa-circle-check"></i> Auto-tracked & verified
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid of Task Offer Cards -->
+            <div class="grid md:grid-cols-3 gap-6">
+                
+                <!-- Task Card 1: App Downloads -->
+                <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 hover:border-plug-500 transition-all space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                        </div>
+                        <span class="text-[10px] font-black bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md border border-emerald-200 uppercase">
+                            FREE REWARD
+                        </span>
+                    </div>
+
+                    <div>
+                        <h4 class="font-extrabold text-slate-900 text-base">App Downloads & Installs</h4>
+                        <p class="text-slate-500 text-xs mt-1 leading-relaxed">
+                            Install & test new apps or mobile games for a few minutes to earn higher FREE balance.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-200/60 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-700">GHS 2.00 – 15.00 FREE</span>
+                        <a href="https://creditplug.vercel.app/app.html" class="text-xs font-extrabold text-plug-600 hover:text-plug-700 flex items-center gap-1">
+                            <span>Start</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Task Card 2: Short Clicks & Views -->
+                <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 hover:border-plug-500 transition-all space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <span class="text-[10px] font-black bg-blue-100 text-blue-800 px-2.5 py-1 rounded-md border border-blue-200 uppercase">
+                            FAST 30S
+                        </span>
+                    </div>
+
+                    <div>
+                        <h4 class="font-extrabold text-slate-900 text-base">Short Clicks & Views</h4>
+                        <p class="text-slate-500 text-xs mt-1 leading-relaxed">
+                            Visit sponsor websites, check out pages for 30 seconds, and collect quick FREE rewards.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-200/60 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-700">GHS 0.10 – 0.50 FREE</span>
+                        <a href="https://creditplug.vercel.app/app.html" class="text-xs font-extrabold text-plug-600 hover:text-plug-700 flex items-center gap-1">
+                            <span>Start</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Task Card 3: Micro-Surveys & Polls -->
+                <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 hover:border-plug-500 transition-all space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center text-lg shadow-sm">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <span class="text-[10px] font-black bg-purple-100 text-purple-800 px-2.5 py-1 rounded-md border border-purple-200 uppercase">
+                            DAILY REFILLS
+                        </span>
+                    </div>
+
+                    <div>
+                        <h4 class="font-extrabold text-slate-900 text-base">Micro-Surveys & Polls</h4>
+                        <p class="text-slate-500 text-xs mt-1 leading-relaxed">
+                            Answer simple market research questions from top networks for instant FREE airtime.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-200/60 flex items-center justify-between">
+                        <span class="text-xs font-bold text-slate-700">GHS 1.50 – 8.00 FREE</span>
+                        <a href="https://creditplug.vercel.app/app.html" class="text-xs font-extrabold text-plug-600 hover:text-plug-700 flex items-center gap-1">
+                            <span>Start</span>
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Authentic Ghanaian Reviews ("Vibes from the Street") -->
+    <section id="reviews" class="py-16 md:py-24 bg-slate-900 text-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-xs font-extrabold text-emerald-400 bg-emerald-500/10 px-3.5 py-1.5 rounded-full border border-emerald-500/20">
+                    Ghanaian Chale Vibes 🇬🇭
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black">What Our Users Are Saying</h2>
+                <p class="text-slate-400 text-sm">Real reviews from students & workers across Accra, Kumasi, Cape Coast, and Tamale.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                
+                <!-- Review 1 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-3xl space-y-4">
+                    <div class="flex items-center gap-1 text-amber-400 text-xs">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed italic">
+                        "Charlie, I didn't believe it at first oh! I completed one quick CPX survey on my phone during lectures at UG Legon, and 5 GHS MTN airtime hit my line in 10 seconds flat! Credit Plug is legit!"
+                    </p>
+                    <div class="flex items-center gap-3 pt-2 border-t border-slate-700/60">
+                        <div class="w-9 h-9 rounded-full bg-yellow-400 text-slate-950 font-black flex items-center justify-center text-xs">
+                            KM
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">Kwame Mensah</div>
+                            <div class="text-[10px] text-slate-400">Legon, Accra • MTN User</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-3xl space-y-4">
+                    <div class="flex items-center gap-1 text-amber-400 text-xs">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed italic">
+                        "Telecel airtime top-up on point! Whenever my bundle finishes at midnight, I just enter Credit Plug, view a few offer clicks, and boom—instant airtime to buy data!"
+                    </p>
+                    <div class="flex items-center gap-3 pt-2 border-t border-slate-700/60">
+                        <div class="w-9 h-9 rounded-full bg-red-600 text-white font-black flex items-center justify-center text-xs">
+                            AB
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">Abena Osei</div>
+                            <div class="text-[10px] text-slate-400">KNUST, Kumasi • Telecel User</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-slate-800/80 border border-slate-700 p-6 rounded-3xl space-y-4">
+                    <div class="flex items-center gap-1 text-amber-400 text-xs">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed italic">
+                        "The Auto-Detect feature for AT Ghana is super smooth. No long processes or fees. Best app for free airtime rewards in Ghana right now!"
+                    </p>
+                    <div class="flex items-center gap-3 pt-2 border-t border-slate-700/60">
+                        <div class="w-9 h-9 rounded-full bg-blue-600 text-white font-black flex items-center justify-center text-xs">
+                            K
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">Kofi Techie</div>
+                            <div class="text-[10px] text-slate-400">Takoradi • AT Ghana User</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 md:py-24 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-xs font-extrabold uppercase tracking-widest text-plug-600 bg-emerald-100 px-3 py-1 rounded-full">Got Questions?</span>
+                <h2 class="text-3xl font-black text-slate-900 mt-2">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-3" id="faq-accordion">
+                
+                <!-- FAQ Item 1 -->
+                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                    <button onclick="toggleFaq(1)" class="w-full px-6 py-4 text-left font-bold text-slate-900 flex items-center justify-between text-sm hover:bg-slate-50">
+                        <span>Is Credit Plug really 100% free in Ghana?</span>
+                        <i id="faq-icon-1" class="fa-solid fa-chevron-down text-plug-600 text-xs transition-transform"></i>
+                    </button>
+                    <div id="faq-answer-1" class="hidden px-6 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                        Yes, boss! Credit Plug is completely free. You will never be asked to deposit money or pay fees. Payouts are sponsored by our offer partners and market research advertisers who pay for your feedback.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                    <button onclick="toggleFaq(2)" class="w-full px-6 py-4 text-left font-bold text-slate-900 flex items-center justify-between text-sm hover:bg-slate-50">
+                        <span>Which Ghanaian mobile networks are supported?</span>
+                        <i id="faq-icon-2" class="fa-solid fa-chevron-down text-plug-600 text-xs transition-transform"></i>
+                    </button>
+                    <div id="faq-answer-2" class="hidden px-6 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                        We support direct automatic airtime top-ups for <strong>MTN Ghana</strong>, <strong>Telecel Ghana (formerly Vodafone)</strong>, and <strong>AT Ghana (AirtelTigo)</strong>.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                    <button onclick="toggleFaq(3)" class="w-full px-6 py-4 text-left font-bold text-slate-900 flex items-center justify-between text-sm hover:bg-slate-50">
+                        <span>How fast will the airtime arrive on my line?</span>
+                        <i id="faq-icon-3" class="fa-solid fa-chevron-down text-plug-600 text-xs transition-transform"></i>
+                    </button>
+                    <div id="faq-answer-3" class="hidden px-6 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                        Payouts are sent via automated top-up APIs. The moment you hit "Withdraw Airtime", your airtime typically lands on your phone in 5 to 30 seconds!
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                    <button onclick="toggleFaq(4)" class="w-full px-6 py-4 text-left font-bold text-slate-900 flex items-center justify-between text-sm hover:bg-slate-50">
+                        <span>Can I withdraw airtime to a friend or family member's line?</span>
+                        <i id="faq-icon-4" class="fa-solid fa-chevron-down text-plug-600 text-xs transition-transform"></i>
+                    </button>
+                    <div id="faq-answer-4" class="hidden px-6 pb-4 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                        Yes! As shown in our app, you can select "Send to Different Phone" and enter any valid Ghanaian mobile phone number to gift them instant airtime!
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Modal Simulation -->
+    <div id="dashboard-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 relative shadow-2xl space-y-5 border border-slate-200">
             
-            <div class="balance-actions">
-              <button class="btn btn-emerald btn-sm header-action-btn" data-tab="withdraw">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
-                <span>Withdraw Airtime</span>
-              </button>
-              <button class="btn btn-outline-light btn-sm header-action-btn" id="scroll-to-surveys">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-                <span>Earn More</span>
-              </button>
-            </div>
-          </div>
-
-          <div class="desktop-quick-info">
-            <div class="info-pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              <span>Instant Telco Delivery</span>
-            </div>
-            <p class="info-text">Complete CPX Research surveys below to accumulate balance. Earnings are sent straight to your phone number as mobile airtime across MTN, Telecel, and AT networks.</p>
-          </div>
-        </header>
-
-        <div class="section-block main-survey-block">
-          <div class="section-header">
-            <div class="sh-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-              <h3>Earn from Surveys</h3>
-            </div>
-            <span class="section-tag">Powered by CPX Research</span>
-          </div>
-          <div class="survey-container" id="cpx-container">
-            <div class="survey-placeholder" id="cpx-placeholder">
-              <div class="loader-spinner"></div>
-              <p>Loading available surveys…</p>
-            </div>
-            <!-- CPX Research iframe will be injected here by app.js -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── TASKS TAB (TimeWall Offerwall) ─── -->
-    <section id="tab-tasks" class="tab-content">
-      <header class="app-header page-header-desktop">
-        <div class="page-title-group">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          <h2 class="page-title">Tasks & Offers Hub</h2>
-        </div>
-        <p class="page-desc">Complete micro-tasks, test apps, and view offers to earn instant airtime credit</p>
-      </header>
-
-      <div class="tasks-hub-container">
-        <!-- Hero Launch Card -->
-        <div class="tasks-hero-card">
-          <div class="thc-badge">
-            <span class="pulse-dot"></span>
-            <span>TimeWall Partner Network · Instant Credits</span>
-          </div>
-
-          <h3 class="thc-title">Earn Airtime with Quick Tasks</h3>
-          <p class="thc-desc">
-            Test apps, click offers, and complete micro-surveys. Instant automatic credits directly to your airtime balance.
-          </p>
-
-          <div class="thc-cta-box">
-            <button class="btn btn-primary btn-lg thc-launch-btn" id="open-timewall-hero-btn">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              <span>Launch Tasks Portal</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            <button onclick="closeDashboardModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            <div class="thc-tracking-pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-              <span>Auto-tracked to <strong id="thc-user-tag">your account</strong></span>
-            </div>
-          </div>
-        </div>
 
-        <!-- How It Works 3-Step Bar -->
-        <div class="tasks-steps-row">
-          <div class="task-step-card">
-            <div class="tsc-number">1</div>
-            <div class="tsc-info">
-              <h4>Open Tasks</h4>
-              <p>Click Launch Portal. It opens TimeWall in a dedicated, fast window.</p>
+            <div class="text-center space-y-1.5">
+                <div class="w-12 h-12 rounded-2xl bg-plug-navy text-emerald-400 flex items-center justify-center mx-auto text-xl font-bold shadow-md">
+                    <i class="fa-solid fa-plug"></i>
+                </div>
+                <h3 class="text-2xl font-black text-slate-900">Welcome to Credit Plug</h3>
+                <p class="text-xs text-slate-500">Access your airtime balance & open tasks</p>
             </div>
-          </div>
-          <div class="task-step-card">
-            <div class="tsc-number">2</div>
-            <div class="tsc-info">
-              <h4>Complete Offers</h4>
-              <p>Choose from clicks, downloads, or surveys that take only a few minutes.</p>
-            </div>
-          </div>
-          <div class="task-step-card">
-            <div class="tsc-number">3</div>
-            <div class="tsc-info">
-              <h4>Instant Credit</h4>
-              <p>Airtime balance updates automatically upon completion.</p>
-            </div>
-          </div>
-        </div>
 
-        <!-- Task Categories Grid -->
-        <div class="tasks-category-grid">
-          <div class="task-cat-card cat-apps" data-launch="true">
-            <div class="tcc-icon app-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-            </div>
-            <div class="tcc-content">
-              <div class="tcc-top">
-                <h4>App Downloads & Installs</h4>
-                <span class="tcc-tag high">High Reward</span>
-              </div>
-              <p>Install & test new apps or games for a few minutes to earn higher balance.</p>
-            </div>
-            <div class="tcc-action-badge">
-              <span>Start</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-
-          <div class="task-cat-card cat-clicks" data-launch="true">
-            <div class="tcc-icon click-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
-            </div>
-            <div class="tcc-content">
-              <div class="tcc-top">
-                <h4>Short Clicks & Views</h4>
-                <span class="tcc-tag fast">Fast 30s</span>
-              </div>
-              <p>Visit sponsor websites, check out pages for 30 seconds, and collect quick rewards.</p>
-            </div>
-            <div class="tcc-action-badge">
-              <span>Start</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-
-          <div class="task-cat-card cat-surveys" data-launch="true">
-            <div class="tcc-icon survey-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            </div>
-            <div class="tcc-content">
-              <div class="tcc-top">
-                <h4>Micro-Surveys & Polls</h4>
-                <span class="tcc-tag daily">Daily Refills</span>
-              </div>
-              <p>Answer short opinion questions and get credited directly to your CreditPlug account.</p>
-            </div>
-            <div class="tcc-action-badge">
-              <span>Start</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-
-          <div class="task-cat-card cat-games" data-launch="true">
-            <div class="tcc-icon game-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            </div>
-            <div class="tcc-content">
-              <div class="tcc-top">
-                <h4>Games & Signups</h4>
-                <span class="tcc-tag bonus">Bonus Payouts</span>
-              </div>
-              <p>Reach levels in mobile games or try partner services for larger balance earnings.</p>
-            </div>
-            <div class="tcc-action-badge">
-              <span>Start</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <!-- Guarantee & Tracking Notice -->
-        <div class="tasks-guarantee-card">
-          <div class="tgc-left">
-            <div class="tgc-shield">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="tgc-text">
-              <h5>Automatic Tracking & Instant Airtime Credit</h5>
-              <p>Every completed task is verified via server-to-server webhook and credited straight to your balance. No screenshots or manual approvals needed.</p>
-            </div>
-          </div>
-          <button class="btn btn-outline btn-sm" id="refresh-tasks-balance-btn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-            <span>Refresh Balance</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── WITHDRAW TAB ─── -->
-    <section id="tab-withdraw" class="tab-content">
-      <header class="app-header page-header-desktop">
-        <div class="page-title-group">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M6 16h.01M10 16h.01M14 16h.01M18 16h.01"/></svg>
-          <h2 class="page-title">Withdraw Airtime</h2>
-        </div>
-        <p class="page-desc">Convert your accumulated balance to instant mobile airtime directly to your registered phone number</p>
-      </header>
-
-      <div class="desktop-grid-withdraw">
-        <div class="section-block withdraw-card-block">
-          <div class="withdraw-balance-row">
-            <div class="wb-left">
-              <span class="wb-label">Available Balance</span>
-              <span class="wb-amount" id="withdraw-balance">GHS 0.00</span>
-            </div>
-            <div class="wb-icon-badge">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            </div>
-          </div>
-
-          <form id="withdraw-form" class="withdraw-form">
-            <!-- Interactive Telco Network Selector -->
-            <div class="form-group">
-              <label class="telco-group-label">
-                <span>Select Mobile Network Provider</span>
-              </label>
-              
-              <div class="telco-grid" id="telco-selector">
-                <!-- MTN Ghana -->
-                <div class="telco-card active" data-network="MTN">
-                  <div class="telco-logo-badge mtn-badge">
-                    <span class="telco-name-bold">MTN</span>
-                  </div>
-                  <div class="telco-info">
-                    <span class="telco-title">MTN Ghana</span>
-                    <span class="telco-sub">MTN MoMo / Airtime</span>
-                  </div>
-                  <div class="telco-radio-dot"></div>
+            <form action="https://creditplug.vercel.app/app.html" method="GET" class="space-y-3.5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Ghana Phone Number or Handle</label>
+                    <input type="text" required placeholder="e.g. 0530293161 or @Dennis" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-slate-900 focus:outline-none focus:border-plug-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Select Network</label>
+                    <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-bold text-slate-900 focus:outline-none focus:border-plug-500">
+                        <option>MTN Ghana (MoMo / Airtime)</option>
+                        <option>Telecel Ghana</option>
+                        <option>AT Ghana (AirtelTigo)</option>
+                    </select>
                 </div>
 
-                <!-- Telecel Ghana (Vodafone) -->
-                <div class="telco-card" data-network="TELECEL">
-                  <div class="telco-logo-badge telecel-badge">
-                    <span class="telco-name-bold">telecel</span>
-                  </div>
-                  <div class="telco-info">
-                    <span class="telco-title">Telecel Ghana</span>
-                    <span class="telco-sub">Formerly Vodafone</span>
-                  </div>
-                  <div class="telco-radio-dot"></div>
+                <a href="https://creditplug.vercel.app/app.html" class="block w-full text-center py-3.5 rounded-xl bg-plug-500 hover:bg-plug-600 text-white font-black text-xs shadow-md transition-all">
+                    Launch FREE Credit Plug App 🔌
+                </a>
+            </form>
+
+            <div class="text-center pt-2 border-t border-slate-100">
+                <a href="https://creditplug.vercel.app/app.html" target="_blank" class="text-xs font-extrabold text-plug-600 hover:underline flex items-center justify-center gap-1">
+                    <span>Visit App: creditplug.vercel.app/app.html</span>
+                    <i class="fa-solid fa-external-link text-[10px]"></i>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast Message -->
+    <div id="toast-notify" class="fixed bottom-5 right-5 z-50 bg-plug-navy text-white px-5 py-3.5 rounded-2xl shadow-2xl font-bold text-xs hidden flex items-center gap-2 border border-slate-700 transform transition-all">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span id="toast-message">Airtime request sent successfully!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 text-xs py-12 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                
+                <div class="space-y-1">
+                    <div class="flex items-center justify-center md:justify-start gap-2">
+                        <div class="w-7 h-7 rounded-xl bg-plug-500 flex items-center justify-center text-white text-xs font-bold">
+                            <i class="fa-solid fa-plug"></i>
+                        </div>
+                        <span class="text-base font-black text-white">Credit<span class="text-plug-500">Plug</span></span>
+                    </div>
+                    <p class="text-slate-500 text-[11px]">The ultimate Ghana airtime & mobile reward plug. Ghana Cedi (GHS) airtime delivery.</p>
                 </div>
 
-                <!-- AT (AirtelTigo) -->
-                <div class="telco-card" data-network="AT">
-                  <div class="telco-logo-badge at-badge">
-                    <span class="telco-name-bold">AT</span>
-                  </div>
-                  <div class="telco-info">
-                    <span class="telco-title">AT Ghana</span>
-                    <span class="telco-sub">AirtelTigo Network</span>
-                  </div>
-                  <div class="telco-radio-dot"></div>
+                <div class="flex flex-wrap justify-center gap-6 font-semibold">
+                    <a href="#how-it-works" class="hover:text-white transition-colors">How It Works</a>
+                    <a href="#earning-hub" class="hover:text-white transition-colors">Tasks Hub</a>
+                    <a href="#cashout-demo" class="hover:text-white transition-colors">Simulator</a>
+                    <a href="https://creditplug.vercel.app" target="_blank" class="text-plug-400 hover:text-plug-300">creditplug.vercel.app</a>
                 </div>
 
-                <!-- Auto-Detect -->
-                <div class="telco-card" data-network="AUTO">
-                  <div class="telco-logo-badge auto-badge">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                  </div>
-                  <div class="telco-info">
-                    <span class="telco-title">Auto-Detect</span>
-                    <span class="telco-sub">Smart Network Route</span>
-                  </div>
-                  <div class="telco-radio-dot"></div>
+            </div>
+
+            <div class="pt-6 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+                <p>&copy; 2026 Credit Plug Ghana. All rights reserved.</p>
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center gap-1 text-emerald-400 font-bold">
+                        <i class="fa-solid fa-bolt text-[10px]"></i> Powered by CPX & TimeWall
+                    </span>
                 </div>
-              </div>
+            </div>
+        </div>
+    </footer>
 
-            <!-- Recipient Phone Selector -->
-            <div class="form-group">
-              <label class="telco-group-label">
-                <span>Airtime Destination Phone</span>
-              </label>
-              
-              <div class="phone-choice-grid">
-                <div class="phone-choice-card active" id="choice-registered" data-mode="registered">
-                  <div class="pc-radio-dot"></div>
-                  <div class="pc-info">
-                    <span class="pc-title">Use Registered Phone</span>
-                    <span class="pc-sub" id="registered-phone-display">024XXXXXXX</span>
-                  </div>
+    <script>
+        /* Mobile Menu Drawer Handler */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* FAQ Accordion Toggle */
+        function toggleFaq(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            
+            if (answer.classList.contains('hidden')) {
+                answer.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                answer.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        /* Modal Popup Controls */
+        function openDashboardModal() {
+            window.location.href = 'https://creditplug.vercel.app/app.html';
+        }
+
+        function closeDashboardModal() {
+            document.getElementById('dashboard-modal').classList.add('hidden');
+        }
+
+        /* Live Ghanaian Payout Feed Simulation */
+        const sampleGhanaianNames = ['Kofi A.', 'Ama K.', 'Kwesi M.', 'Dennis A.', 'Abena S.', 'Yaw O.', 'Akosua P.', 'Ebenezer T.'];
+        const sampleNetworks = ['MTN FREE Airtime', 'Telecel FREE Airtime', 'AT Ghana FREE Airtime'];
+        const sampleAmounts = ['GH₵ 2.00', 'GH₵ 5.00', 'GH₵ 3.50', 'GH₵ 10.00', 'GH₵ 1.00'];
+
+        function createPayoutItem() {
+            const name = sampleGhanaianNames[Math.floor(Math.random() * sampleGhanaianNames.length)];
+            const net = sampleNetworks[Math.floor(Math.random() * sampleNetworks.length)];
+            const amt = sampleAmounts[Math.floor(Math.random() * sampleAmounts.length)];
+            const mins = Math.floor(Math.random() * 4) + 1;
+
+            return `
+                <div class="inline-flex items-center gap-2 bg-slate-800/90 border border-slate-700/80 px-3.5 py-1.5 rounded-full shrink-0 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-plug-400"></span>
+                    <span class="font-bold text-white text-xs">${name}</span>
+                    <span class="text-slate-400 text-[11px]">received</span>
+                    <span class="font-black text-emerald-400 text-xs">${amt} ${net}</span>
+                    <span class="text-slate-500 text-[10px]">• ${mins}m ago</span>
                 </div>
+            `;
+        }
 
-                <div class="phone-choice-card" id="choice-custom" data-mode="custom">
-                  <div class="pc-radio-dot"></div>
-                  <div class="pc-info">
-                    <span class="pc-title">Send to Different Phone</span>
-                    <span class="pc-sub">Specify custom recipient</span>
-                  </div>
-                </div>
-              </div>
+        function populatePayoutTicker() {
+            const ticker = document.getElementById('payout-ticker');
+            if(!ticker) return;
+            let html = '';
+            for(let i = 0; i < 8; i++) {
+                html += createPayoutItem();
+            }
+            ticker.innerHTML = html;
+        }
 
-              <div class="target-phone-wrapper" style="margin-top: 10px;">
-                <label for="withdraw-phone">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                  <span>Recipient Mobile Number</span>
-                </label>
-                <input type="tel" id="withdraw-phone" placeholder="e.g. 0241234567" required readonly class="input-disabled" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="withdraw-amount">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                Withdrawal Amount (GHS)
-              </label>
-              <input type="number" id="withdraw-amount" placeholder="Min. 3.00" min="3" step="0.01" required />
-              <span class="field-hint">Minimum payout threshold is GHS 3.00. Zero transaction fees.</span>
-            </div>
-
-            <button type="submit" class="btn btn-emerald btn-full" id="withdraw-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              <span>Withdraw Instant Airtime</span>
-            </button>
-            <div id="withdraw-error" class="form-error" role="alert"></div>
-            <div id="withdraw-success" class="form-success hidden" role="status"></div>
-          </form>
-        </div>
-
-        <div class="section-block tx-card-block">
-          <div class="section-header">
-            <div class="sh-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <h3>Transaction History</h3>
-            </div>
-          </div>
-          <div id="tx-list" class="tx-list">
-            <div class="tx-empty" id="tx-empty">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="16" y1="13" x2="8" y2="13"/>
-                <line x1="16" y1="17" x2="8" y2="17"/>
-              </svg>
-              <p>No transactions yet</p>
-            </div>
-            <!-- Transaction items rendered by app.js -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── PROFILE TAB ─── -->
-    <section id="tab-profile" class="tab-content">
-      <header class="app-header page-header-desktop">
-        <div class="page-title-group">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <h2 class="page-title">Profile & Security Settings</h2>
-        </div>
-        <p class="page-desc">Manage your account username and password. Phone numbers are locked for security.</p>
-      </header>
-
-      <div class="desktop-profile-wrapper">
-        <div class="section-block">
-          <div class="profile-info-card">
-            <div class="profile-avatar" id="profile-avatar">U</div>
-            <div class="profile-details">
-              <div class="profile-name-row">
-                <h3 class="profile-username-display" id="profile-username-display">@username</h3>
-                <span class="verified-badge">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  Verified User
-                </span>
-              </div>
-              <span class="profile-email" id="profile-email">—</span>
-              <span class="profile-phone-badge" id="profile-phone-display">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <span id="profile-phone-text">—</span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Profile Update Form -->
-        <div class="section-block">
-          <div class="section-header">
-            <div class="sh-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              <h3>Update Account Details</h3>
-            </div>
-          </div>
-
-          <form id="profile-update-form" class="profile-update-form">
-            <div class="form-group">
-              <label for="update-username">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                Username
-              </label>
-              <input type="text" id="update-username" placeholder="Your username" required />
-            </div>
-
-            <!-- Phone Number Field (DISABLED / LOCKED) -->
-            <div class="form-group">
-              <label for="update-phone" class="locked-label">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                Phone Number (Immutable)
-                <span class="locked-tag">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  Locked
-                </span>
-              </label>
-              <input type="tel" id="update-phone" disabled class="input-disabled" title="Phone number cannot be changed" />
-              <span class="field-hint text-warning">Each phone number is uniquely bound to one account and cannot be modified.</span>
-            </div>
-
-            <div class="form-group">
-              <label for="update-password">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                New Password (Optional)
-              </label>
-              <input type="password" id="update-password" placeholder="Leave blank to keep current password" minlength="8" autocomplete="new-password" />
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-full" id="save-profile-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-              <span>Save Profile Changes</span>
-            </button>
-            <div id="profile-error" class="form-error" role="alert"></div>
-            <div id="profile-success" class="form-success hidden" role="status"></div>
-          </form>
-        </div>
-
-        <div class="section-block">
-          <div class="section-header">
-            <div class="sh-title">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-              <h3>Account Statistics</h3>
-            </div>
-          </div>
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-icon-wrap emerald">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              </div>
-              <span class="stat-label">Total Earned</span>
-              <span class="stat-value" id="stat-earned">GHS 0.00</span>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon-wrap slate">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              </div>
-              <span class="stat-label">Total Withdrawn</span>
-              <span class="stat-value" id="stat-withdrawn">GHS 0.00</span>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon-wrap emerald">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-              </div>
-              <span class="stat-label">Current Balance</span>
-              <span class="stat-value" id="stat-balance">GHS 0.00</span>
-            </div>
-            <div class="stat-card">
-              <div class="stat-icon-wrap blue">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              </div>
-              <span class="stat-label">Surveys Done</span>
-              <span class="stat-value" id="stat-surveys">0</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="section-block logout-block-desktop">
-          <button class="btn btn-outline btn-full logout-btn" id="logout-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            <span>Log Out Account</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── BOTTOM NAVIGATION (MOBILE ONLY) ─── -->
-    <nav class="bottom-nav" id="bottom-nav">
-      <button class="nav-item active" data-tab="home" id="nav-home">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
-          <polyline points="9 22 9 12 15 12 15 22"/>
-        </svg>
-        <span>Home</span>
-      </button>
-      <button class="nav-item" data-tab="tasks" id="nav-tasks">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 11l3 3L22 4"/>
-          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-        </svg>
-        <span>Tasks</span>
-      </button>
-      <button class="nav-item" data-tab="withdraw" id="nav-withdraw">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="12" y1="1" x2="12" y2="23"/>
-          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-        </svg>
-        <span>Withdraw</span>
-      </button>
-      <button class="nav-item" data-tab="profile" id="nav-profile">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
-        <span>Profile</span>
-      </button>
-    </nav>
-  </div>
-
-  <!-- ══════════════════════════════════════════════
-       TOAST NOTIFICATION
-  ══════════════════════════════════════════════ -->
-  <div id="toast" class="toast hidden" role="alert"></div>
-
-  <!-- Supabase CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="app.js"></script>
+        window.onload = function() {
+            populatePayoutTicker();
+            setInterval(populatePayoutTicker, 10000);
+        };
+    </script>
 </body>
 </html>
